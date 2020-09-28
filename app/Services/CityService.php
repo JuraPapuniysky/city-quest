@@ -72,4 +72,10 @@ class CityService
 
         return $this->cityRepository->save($city);
     }
+
+    public function delete(CityEntity $cityEntity): void
+    {
+        $cityEntity->setIsDeleted(true);
+        $this->cityRepository->save($cityEntity);
+    }
 }

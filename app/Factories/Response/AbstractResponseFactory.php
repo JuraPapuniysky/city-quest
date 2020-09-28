@@ -7,6 +7,7 @@ namespace App\Factories\Response;
 use App\Exceptions\ValidationException;
 use Doctrine\ORM\EntityNotFoundException;
 use Laminas\Diactoros\Response\JsonResponse;
+use Psr\Http\Message\ResponseInterface;
 
 abstract class AbstractResponseFactory
 {
@@ -25,5 +26,12 @@ abstract class AbstractResponseFactory
             'description' => 'Validation',
             'message' => $validationException->getMessage(),
         ], 400);
+    }
+
+    public function deleted(): ResponseInterface
+    {
+        return new JsonResponse([
+            'status' => 'success',
+        ], 201);
     }
 }

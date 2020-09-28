@@ -12,8 +12,6 @@ use Doctrine\Persistence\ObjectRepository;
 
 class CityRepository extends BaseRepository
 {
-    private ObjectRepository $repository;
-
     public function __construct(EntityManagerInterface $entityManager)
     {
         parent::__construct($entityManager);

@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityNotFoundException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class CityController
+final class CityController
 {
     private CityService $cityService;
     private CountryService $countryService;
@@ -74,5 +74,17 @@ class CityController
         }
 
         return $this->cityResponseFactory->city($city, 201);
+    }
+
+    public function delete(ServerRequestInterface $request, string $uuid): ResponseInterface
+    {
+        try {
+            $cityEntity = $this->cityService->getCityByUuid($uuid);
+            $this->cityService->delete($cityEntity);
+        } catch (EntityNotFoundException $e) {
+            return $this->cityResponseFactory->notFound($e);
+        }
+
+        return $this->cityResponseFactory->deleted();
     }
 }

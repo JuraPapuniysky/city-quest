@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="quests", indexes={@ORM\Index(name="uuid", columns={"uuid"})})
+ * @ORM\Table(name="quests", indexes={@ORM\Index(name="uuid", columns={"uuid", "country_uuid", "city_uuid"})})
  */
 class QuestEntity
 {
@@ -30,11 +30,6 @@ class QuestEntity
     private ?bool $isDeleted;
 
     /**
-     * @ORM\Column(type="text", name="description", nullable=false)
-     */
-    private ?string $description;
-
-    /**
      * @ORM\Column(type="datetime", name="created_at", nullable=true)
      */
     private ?\DateTime $createdAt;
@@ -53,6 +48,11 @@ class QuestEntity
      * @ORM\Column(type="text", name="name", nullable=false)
      */
     private ?string $name = null;
+
+    /**
+     * @ORM\Column(type="text", name="description", nullable=false)
+     */
+    private ?string $description;
 
 
     /**

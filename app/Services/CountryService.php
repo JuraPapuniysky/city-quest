@@ -72,8 +72,9 @@ class CountryService
         return $countryEntity;
     }
 
-    public function deleteCountry(CountryEntity $countryEntity): void
+    public function delete(CountryEntity $countryEntity): void
     {
-
+        $countryEntity->setIsDeleted(true);
+        $this->countryRepository->save($countryEntity);
     }
 }

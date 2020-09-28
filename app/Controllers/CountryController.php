@@ -11,7 +11,7 @@ use Doctrine\ORM\EntityNotFoundException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class CountryController
+final class CountryController
 {
     private CountryService $countryService;
     private CountryResponseFactory $countryResponseFactory;
@@ -68,10 +68,11 @@ class CountryController
     {
         try {
             $country = $this->countryService->getOneCountryByUuid($uuid);
+            $this->countryService->delete($country);
         } catch (EntityNotFoundException $e) {
             return $this->countryResponseFactory->notFound($e);
         }
 
-
+        return $this->countryResponseFactory->deleted();
     }
 }

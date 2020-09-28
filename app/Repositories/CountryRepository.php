@@ -11,8 +11,6 @@ use Doctrine\Persistence\ObjectRepository;
 
 final class CountryRepository extends BaseRepository
 {
-    private ObjectRepository $repository;
-
     public function __construct(EntityManagerInterface $entityManager)
     {
         parent::__construct($entityManager);
