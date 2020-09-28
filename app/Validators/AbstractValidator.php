@@ -24,4 +24,9 @@ abstract class AbstractValidator
 
         return $errors->firstOfAll();
     }
+
+    public function errorsToString(): string
+    {
+        return json_encode($this->validation->errors());
+    }
 }

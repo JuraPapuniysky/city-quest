@@ -6,7 +6,7 @@ namespace App\Validators;
 
 use App\Entities\Request\RequestEntityInterface;
 
-class AuthValidator extends AbstractValidator implements ValidatorInterface
+final class AuthValidator extends AbstractValidator implements ValidatorInterface
 {
     public function validate(RequestEntityInterface $authRequestEntity): bool
     {
