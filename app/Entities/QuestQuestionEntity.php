@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="quest_questions", indexes={@ORM\Index(name="uuid", columns={"uuid"})})
  */
-class QuestQuestion
+class QuestQuestionEntity
 {
     /**
      * @ORM\Id
@@ -48,6 +48,16 @@ class QuestQuestion
      * @ORM\Column(type="text", name="description", nullable=false)
      */
     private ?string $description;
+
+    /**
+     * @ORM\Column(type="string", name="type", nullable=false)
+     */
+    private ?string $type;
+
+    /**
+     * @ORM\Column(type="string", name="answer", nullable=false)
+     */
+    private ?string $answer;
 
 
     public function getId(): ?int
@@ -118,5 +128,25 @@ class QuestQuestion
     public function setUpdatedAt(?\DateTime $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): void
+    {
+        $this->type = $type;
+    }
+
+    public function getAnswer(): string
+    {
+        return $this->answer;
+    }
+
+    public function setAnswer(string $answer): void
+    {
+        $this->answer = $answer;
     }
 }

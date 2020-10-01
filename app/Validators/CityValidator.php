@@ -9,7 +9,7 @@ use App\Entities\Request\RequestEntityInterface;
 use App\Validators\CustomRules\EntityExistsRule;
 use Rakit\Validation\Validator;
 
-class CityValidator extends AbstractValidator implements ValidatorInterface
+final class CityValidator extends AbstractValidator implements ValidatorInterface
 {
     private EntityExistsRule $entityExistsRule;
 
