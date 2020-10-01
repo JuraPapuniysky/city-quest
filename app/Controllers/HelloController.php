@@ -22,7 +22,6 @@ class HelloController
     {
         return new JsonResponse([
             'message' => $this->helloService->sayHello($name),
-            'auth' => $request->getAttribute('authUserEntity')->getUuid(),
             'authError' => json_encode($request->getAttribute('authError')),
         ], 200);
     }
