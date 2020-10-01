@@ -35,12 +35,12 @@ class QuestEntity
     private ?\DateTime $createdAt;
 
     /**
-     * @ORM\Column(type="string", name="country_uuid" unique=false, nullable=false)
+     * @ORM\Column(type="string", name="country_uuid", unique=false, nullable=false)
      */
     private ?string $countryUuid;
 
     /**
-     * @ORM\Column(type="string", name="city_uuid" unique=false, nullable=false)
+     * @ORM\Column(type="string", name="city_uuid", unique=false, nullable=false)
      */
     private ?string $cityUuid;
 

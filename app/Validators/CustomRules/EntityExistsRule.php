@@ -10,9 +10,9 @@ use Rakit\Validation\Rule;
 
 final class EntityExistsRule extends Rule
 {
-    private $message = ":attribute :not found";
+    protected $message = ":attribute :not found";
 
-    private $fillableParams = ['table', 'column', 'except'];
+    protected $fillableParams = ['table', 'column', 'except'];
 
     private EntityManagerInterface $entityManager;
 

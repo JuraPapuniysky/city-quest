@@ -40,7 +40,7 @@ class QuestQuestionEntity
     private ?\DateTime $updatedAt;
 
     /**
-     * @ORM\Column(type="string", name="quest_uuid" unique=false, nullable=false)
+     * @ORM\Column(type="string", name="quest_uuid", unique=false, nullable=false)
      */
     private ?string $questUuid = null;
 

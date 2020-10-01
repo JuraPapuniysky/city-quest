@@ -40,7 +40,7 @@ class CityEntity
     private ?bool $isDeleted;
 
     /**
-     * @ORM\Column(type="string", name="country_uuid" unique=true, nullable=false)
+     * @ORM\Column(type="string", name="country_uuid", nullable=false)
      */
     private ?string $countryUuid;
 
