@@ -18,3 +18,23 @@ $app->post('countryCreate', '/api/v1/country', [\App\Controllers\CountryControll
 $app->put('countryUpdate', '/api/v1/country/{uuid}', [\App\Controllers\CountryController::class, 'update']);
 $app->delete('countryDelete', '/api/v1/country/{uuid}', [\App\Controllers\CountryController::class, 'delete']);
 
+//CityController
+$app->get('city', '/api/v1/city/{uuid}', [\App\Controllers\CityController::class, 'city']);
+$app->get('cities', '/api/v1/cities/{countryUuid}', [\App\Controllers\CityController::class, 'cities']);
+$app->post('cityCreate', '/api/v1/city', [\App\Controllers\CityController::class, 'create']);
+$app->put('countryUpdate', '/api/v1/city/{uuid}', [\App\Controllers\CityController::class, 'update']);
+$app->delete('countryDelete', '/api/v1/city/{uuid}', [\App\Controllers\CityController::class, 'delete']);
+
+//QuestController
+$app->get('quest', '/api/v1/quest/{uuid}', [\App\Controllers\QuestController::class, 'city']);
+$app->get('quests', '/api/v1/quests/{countryUuid}', [\App\Controllers\QuestController::class, 'quests']);
+$app->post('questCreate', '/api/v1/quest', [\App\Controllers\QuestController::class, 'create']);
+$app->put('questUpdate', '/api/v1/quest/{uuid}', [\App\Controllers\QuestController::class, 'update']);
+$app->delete('questDelete', '/api/v1/quest/{uuid}', [\App\Controllers\QuestController::class, 'delete']);
+
+//QuestQuestionController
+$app->get('questQuestion', '/api/v1/question/{uuid}', [\App\Controllers\QuestQuestionController::class, 'question']);
+$app->get('quests', '/api/v1/questions/{questUuid}', [\App\Controllers\QuestQuestionController::class, 'questions']);
+$app->post('questionCreate', '/api/v1/question', [\App\Controllers\QuestQuestionController::class, 'create']);
+$app->put('questionUpdate', '/api/v1/question/{uuid}', [\App\Controllers\QuestQuestionController::class, 'update']);
+$app->delete('questionDelete', '/api/v1/question/{uuid}', [\App\Controllers\QuestQuestionController::class, 'delete']);

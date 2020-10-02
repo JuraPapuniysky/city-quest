@@ -39,7 +39,7 @@ final class CountryResponseFactory extends AbstractResponseFactory
         }
 
         return new JsonResponse([
-            'status' => 200,
+            'status' => 'Success',
             'countries' => $countriesResponse,
         ], 200);
     }

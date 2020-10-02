@@ -57,7 +57,9 @@ class CityService
 
         $city = $this->cityEntityFactory->create($cityRequestEntity);
 
-        return $this->cityRepository->save($city);
+        $this->cityRepository->save($city);
+
+        return $city;
     }
 
     public function update(ServerRequestInterface $request, CityEntity $city): CityEntity
@@ -70,7 +72,9 @@ class CityService
 
         $city = $this->cityEntityFactory->update($cityRequestEntity, $city);
 
-        return $this->cityRepository->save($city);
+        $this->cityRepository->save($city);
+
+        return $city;
     }
 
     public function delete(CityEntity $cityEntity): void
