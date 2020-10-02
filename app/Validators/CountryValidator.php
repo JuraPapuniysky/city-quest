@@ -30,7 +30,7 @@ final class CountryValidator extends AbstractValidator implements ValidatorInter
             'isoCode' => $requestEntity->isoCode,
             'description' => $requestEntity->description,
         ], [
-            'isoCode' => "required|unique:$uniqueClassname,isoCode",
+            'isoCode' => "required|unique:$uniqueClassname,isoCode,{$requestEntity->uuid}",
             'name' => 'required',
         ]);
 

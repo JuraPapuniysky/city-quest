@@ -27,6 +27,6 @@ abstract class AbstractValidator
 
     public function errorsToString(): string
     {
-        return json_encode($this->validation->errors());
+        return implode(', ', $this->errors());
     }
 }

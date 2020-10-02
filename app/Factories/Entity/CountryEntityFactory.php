@@ -41,5 +41,6 @@ class CountryEntityFactory
         $country->setIsoCode($requestEntity->isoCode);
         $country->setDescription($requestEntity->description);
 
+        return $country;
     }
 }

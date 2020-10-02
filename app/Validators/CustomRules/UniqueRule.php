@@ -16,6 +16,8 @@ final class UniqueRule extends Rule
 
     protected EntityManagerInterface $entityManager;
 
+    protected ?string $entityUuid;
+
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
@@ -31,7 +33,7 @@ final class UniqueRule extends Rule
         $table = $this->parameter('table');
         $except = $this->parameter('except');
 
-        if ($except AND $except == $value) {
+        if ($except !== null && $except === $value) {
             return true;
         }
 
@@ -42,6 +44,10 @@ final class UniqueRule extends Rule
         ]);
 
         if ($entity === null) {
+            return true;
+        }
+
+        if ($entity->getUuid() === $except) {
             return true;
         }
 

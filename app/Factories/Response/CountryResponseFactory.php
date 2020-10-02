@@ -30,10 +30,12 @@ final class CountryResponseFactory extends AbstractResponseFactory
     {
         $countriesResponse = [];
         foreach ($countries as $country) {
-            $countriesResponse[]['uuid'] = $country->getUuid();
-            $countriesResponse[]['name'] = $country->getName();
-            $countriesResponse[]['isoCode'] = $country->getIsoCode();
-            $countriesResponse[]['description'] = $country->getDescription();
+            $countriesResponse[] = [
+                'uuid' => $country->getUuid(),
+                'name' => $country->getName(),
+                'isoCode' => $country->getIsoCode(),
+                'description' => $country->getDescription(),
+            ];
         }
 
         return new JsonResponse([

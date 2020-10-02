@@ -47,7 +47,7 @@ class CountryService
         $requestEntity = $this->requestEntityFactory->create($request, CountryRequestEntity::class);
 
         if ($this->countryValidator->validate($requestEntity) === false) {
-            throw new ValidationException('Validation error', 400);
+            throw new ValidationException($this->countryValidator->errorsToString(), 400);
         }
 
         $country = $this->countryEntityFactory->create($requestEntity);
@@ -59,7 +59,9 @@ class CountryService
 
     public function update(ServerRequestInterface $request, CountryEntity $countryEntity): CountryEntity
     {
+        /** @var CountryRequestEntity $requestEntity */
         $requestEntity = $this->requestEntityFactory->create($request, CountryRequestEntity::class);
+        $requestEntity->uuid = $countryEntity->getUuid();
 
         if ($this->countryValidator->validate($requestEntity) === false) {
             throw new ValidationException($this->countryValidator->errorsToString(), 400);

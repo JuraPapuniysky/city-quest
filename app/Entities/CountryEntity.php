@@ -27,7 +27,7 @@ class CountryEntity
     /**
      * @ORM\Column(type="boolean", name="is_deleted", nullable=false, options={"default": false})
      */
-    private ?bool $isDeleted;
+    private ?bool $isDeleted = false;
 
     /**
      * @ORM\Column(type="datetime", name="created_at", nullable=true)

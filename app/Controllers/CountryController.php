@@ -22,16 +22,20 @@ final class CountryController
         $this->countryResponseFactory = $countryResponseFactory;
     }
 
-    public function country(ServerRequestInterface $request): ResponseInterface
+    public function countries(ServerRequestInterface $request): ResponseInterface
     {
         $countries = $this->countryService->getAllCountries();
 
         return $this->countryResponseFactory->countries($countries);
     }
 
-    public function countries(ServerRequestInterface $request, string $uuid): ResponseInterface
+    public function country(ServerRequestInterface $request, string $uuid): ResponseInterface
     {
-        $country = $this->countryService->getOneCountryByUuid($uuid);
+        try {
+            $country = $this->countryService->getOneCountryByUuid($uuid);
+        } catch (EntityNotFoundException $e) {
+            return $this->countryResponseFactory->notFound($e);
+        }
 
         return $this->countryResponseFactory->country($country);
     }

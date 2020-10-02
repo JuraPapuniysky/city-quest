@@ -6,7 +6,8 @@ namespace App\Entities\Request;
 
 class CountryRequestEntity implements RequestEntityInterface
 {
-    public string $name;
-    public string $isoCode;
-    public string $description;
+    public ?string $name = null;
+    public ?string $isoCode = null;
+    public ?string $description = null;
+    public ?string $uuid = null;
 }
