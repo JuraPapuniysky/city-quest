@@ -73,7 +73,9 @@ class QuestService
 
         $questEntity = $this->questEntityFactory->create($requestEntity);
 
-        return $this->questRepository->save($questEntity);
+        $this->questRepository->save($questEntity);
+
+        return $questEntity;
     }
 
     public function update(ServerRequestInterface $request, QuestEntity $questEntity): QuestEntity
