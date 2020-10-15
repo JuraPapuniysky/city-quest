@@ -1,0 +1,21 @@
+<app-main-nav></app-main-nav>
+
+<h1>Cities of country {{country.name}}</h1>
+
+<table class="table">
+  <thead class="thead-dark">
+  <tr>
+    <th *ngFor=" let headerItem of tableHeader" scope="col">{{headerItem}}</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let city of cities">
+    <td scope="col">{{city.uuid}}</td>
+    <td scope="col">{{city.name}}</td>
+    <td scope="col">{{city.description}}</td>
+    <td scope="col"><a class="btn btn-primary" [routerLink]="['/city', city.uuid]">View</a></td>
+  </tr>
+  </tbody>
+</table>
+
+

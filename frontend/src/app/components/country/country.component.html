@@ -1,0 +1,18 @@
+<app-main-nav></app-main-nav>
+<table class="table">
+  <thead class="thead-dark">
+  <tr>
+    <th *ngFor=" let headerItem of tableHeader" scope="col">{{headerItem}}</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let country of countries">
+    <td scope="col">{{country.uuid}}</td>
+    <td scope="col">{{country.name}}</td>
+    <td scope="col">{{country.isoCode}}</td>
+    <td scope="col">{{country.description}}</td>
+    <td scope="col"><a class="btn btn-primary" [routerLink]="['/cities', country.uuid]">Cities</a></td>
+  </tr>
+  </tbody>
+</table>
+
