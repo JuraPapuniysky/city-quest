@@ -12,36 +12,25 @@ import {CityService} from "../../services/city/city.service";
 })
 export class CitiesComponent implements OnInit {
 
-  private countryUuid: string = '';
   public tableHeader: Array<string> = ['uuid', 'name', 'description', ''];
   public country: CountryEntity = new CountryEntity();
-  public cities: Array<CityEntity>
+  public cities: Array<CityEntity>;
+  private countryUuid: string = '';
 
   constructor(private router: ActivatedRoute, private countryService: CountryService, private cityService: CityService) {
   }
 
   async ngOnInit() {
-   await this.setData();
+    this.setData();
   }
 
-  async setData() {
+  setData() {
     this.router.params.subscribe(async params => {
       this.countryUuid = params.countryUuid;
-      await this.setCountry();
+      await this.countryService.getCountry(this.countryUuid);
       this.country = this.countryService.getCountryResponse().country;
       await this.cityService.getCitiesFromApi(this.country);
       this.cities = this.cityService.getCitiesResponse().cities
     });
   }
-
-  async setCountry() {
-    await this.countryService.getCountry(this.countryUuid);
-
-  }
-
-  async setCities() {
-    this.cityService.getCitiesFromApi(this.country);
-  }
-
-
 }
