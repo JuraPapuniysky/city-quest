@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {CountryService} from "../../services/country/country.service";
-import {CountriesResponse} from "../../entities/Response/country/countries-response";
 import {ActivatedRoute} from "@angular/router";
 import {CountryEntity} from "../../entities/country-entity";
 
@@ -16,13 +15,9 @@ export class CountryComponent implements OnInit {
 
   constructor(private countryService: CountryService, private router: ActivatedRoute) { }
 
-  ngOnInit(): void {
-    this.listCountries();
+  async ngOnInit() {
+    await this.countryService.getCountries();
+    this.countries = this.countryService.getCountriesResponse().countries;
   }
 
-  private listCountries(): void {
-    this.countryService.getCountries().subscribe((data:CountriesResponse) => {
-      this.countries = data.countries;
-    })
-  }
 }
