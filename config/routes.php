@@ -22,8 +22,8 @@ $app->delete('countryDelete', '/api/v1/country/{uuid}', [\App\Controllers\Countr
 $app->get('city', '/api/v1/city/{uuid}', [\App\Controllers\CityController::class, 'city']);
 $app->get('cities', '/api/v1/cities/{countryUuid}', [\App\Controllers\CityController::class, 'cities']);
 $app->post('cityCreate', '/api/v1/city', [\App\Controllers\CityController::class, 'create']);
-$app->put('countryUpdate', '/api/v1/city/{uuid}', [\App\Controllers\CityController::class, 'update']);
-$app->delete('countryDelete', '/api/v1/city/{uuid}', [\App\Controllers\CityController::class, 'delete']);
+$app->put('cityUpdate', '/api/v1/city/{uuid}', [\App\Controllers\CityController::class, 'update']);
+$app->delete('cityDelete', '/api/v1/city/{uuid}', [\App\Controllers\CityController::class, 'delete']);
 
 //QuestController
 $app->get('quest', '/api/v1/quest/{uuid}', [\App\Controllers\QuestController::class, 'quest']);

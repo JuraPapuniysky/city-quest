@@ -1,4 +1,5 @@
-<app-main-nav></app-main-nav>
+<h1>Countries</h1>
+<a [routerLink]="['/country/create']" class="btn btn-success">Create country</a>
 <table class="table">
   <thead class="thead-dark">
   <tr>
@@ -6,12 +7,15 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let country of countries">
+  <tr *ngFor="let country of countries; let i = index">
     <td scope="col">{{country.uuid}}</td>
     <td scope="col">{{country.name}}</td>
     <td scope="col">{{country.isoCode}}</td>
     <td scope="col">{{country.description}}</td>
-    <td scope="col"><a class="btn btn-primary" [routerLink]="['/cities', country.uuid]">Cities</a></td>
+    <td scope="col"><a class="btn btn-primary" [routerLink]="['/cities', country.uuid]">Cities</a>
+      <a class="btn btn-warning" [routerLink]="['/country/update/', country.uuid]">Update</a>
+      <button class="btn btn-danger" (click)="deleteCountry(index, country)">Delete</button>
+    </td>
   </tr>
   </tbody>
 </table>

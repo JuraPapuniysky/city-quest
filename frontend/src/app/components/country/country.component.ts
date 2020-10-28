@@ -20,4 +20,11 @@ export class CountryComponent implements OnInit {
     this.countries = this.countryService.getCountriesResponse().countries;
   }
 
+  deleteCountry(index: number, country: CountryEntity): void {
+    this.countryService.deleteCountry(country).subscribe(data => {
+        this.countries.splice(index, 1);
+    }, error => {
+      //TODO error message
+    })
+  }
 }

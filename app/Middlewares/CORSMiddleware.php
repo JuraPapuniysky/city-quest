@@ -16,6 +16,12 @@ class CORSMiddleware implements MiddlewareInterface
     {
         header("Access-Control-Allow-Origin: *");
         header("Access-Control-Allow-Headers: Content-type, X-Auth-Token, Authorization, Origin");
+        header('Access-Control-Allow-Headers: DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range');
+        header('Access-Control-Allow-Methods: GET,POST,PUT,DELETE,HEAD,OPTIONS');
+
+        if ($request->getMethod() == 'OPTIONS') {
+            exit(0);
+        }
 
         return $handler->handle($request);
     }

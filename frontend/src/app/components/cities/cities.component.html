@@ -1,7 +1,7 @@
-<app-main-nav></app-main-nav>
-
 <h1>Cities of country {{country.name}}</h1>
-
+<div class="row">
+  <div class="col-sm-3"><a class="btn btn-success" [routerLink]="['/city/create', country.uuid]">Create city</a></div>
+</div>
 <table class="table">
   <thead class="thead-dark">
   <tr>

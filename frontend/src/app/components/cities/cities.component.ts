@@ -20,7 +20,7 @@ export class CitiesComponent implements OnInit {
   constructor(private router: ActivatedRoute, private countryService: CountryService, private cityService: CityService) {
   }
 
-  async ngOnInit() {
+  ngOnInit() {
     this.setData();
   }
 

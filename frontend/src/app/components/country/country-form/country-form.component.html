@@ -1,0 +1,15 @@
+<form (ngSubmit)="onSubmit(country)">
+  <div class="form-group">
+    <label for="countryName">Country name</label>
+    <input [(ngModel)]="country.name" id="countryName" class="form-control" name="name">
+  </div>
+  <div class="form-group">
+    <label for="iso">Country iso</label>
+    <input [(ngModel)]="country.isoCode" id="iso" class="form-control" name="iso">
+  </div>
+  <div class="form-group">
+    <label for="description">Description</label>
+    <ckeditor id="description" [(ngModel)]="country.description" [editor]="editor" data="country.description" [ngModelOptions]="{standalone: true}"></ckeditor>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
