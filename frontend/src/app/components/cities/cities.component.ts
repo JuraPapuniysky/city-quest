@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {CountryService} from "../../services/country/country.service";
 import {CountryEntity} from "../../entities/country-entity";
 import {CityEntity} from "../../entities/city-entity";
@@ -17,7 +17,7 @@ export class CitiesComponent implements OnInit {
   public cities: Array<CityEntity>;
   private countryUuid: string = '';
 
-  constructor(private router: ActivatedRoute, private countryService: CountryService, private cityService: CityService) {
+  constructor(private router: ActivatedRoute, private countryService: CountryService, private cityService: CityService, private angularRouter: Router) {
   }
 
   ngOnInit() {

@@ -1,0 +1,11 @@
+<form (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="name">City name</label>
+    <input [(ngModel)]="city.name" id="name" name="city-name" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="description">City description</label>
+    <ckeditor id="description" [(ngModel)]="city.description" [editor]="editor" data="country.description" [ngModelOptions]="{standalone: true}"></ckeditor>
+  </div>
+  <input type="submit" class="btn btn-success">
+</form>

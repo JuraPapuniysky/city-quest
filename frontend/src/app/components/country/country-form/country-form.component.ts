@@ -12,7 +12,7 @@ export class CountryFormComponent implements OnInit {
   public editor = ClassicEditor;
 
   @Input() country: CountryEntity;
-  @Output() updateCountryEvent = new EventEmitter<CountryEntity>() ;
+  @Output() updateCountryEvent: EventEmitter<CountryEntity> = new EventEmitter<CountryEntity>();
 
   constructor() { }
 

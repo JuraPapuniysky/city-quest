@@ -18,6 +18,8 @@ export class CountryService {
 
   private countryResponse: CountryResponse = new CountryResponse();
 
+  private _countryNavigate: CountryEntity = new CountryEntity();
+
   constructor(private httpClient: HttpClient) { }
 
   async getCountries() {
@@ -82,5 +84,13 @@ export class CountryService {
 
   public deleteCountry(country: CountryEntity) {
     return this.httpClient.delete(`${this.apiUrl}/country/${country.uuid}`);
+  }
+
+  get countryNavigate(): CountryEntity {
+    return this._countryNavigate;
+  }
+
+  set countryNavigate(value: CountryEntity) {
+    this._countryNavigate = value;
   }
 }

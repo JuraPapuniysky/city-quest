@@ -13,7 +13,10 @@
     <td scope="col">{{city.uuid}}</td>
     <td scope="col">{{city.name}}</td>
     <td scope="col">{{city.description}}</td>
-    <td scope="col"><a class="btn btn-primary" [routerLink]="['/city', city.uuid]">View</a></td>
+    <td scope="col">
+      <a class="btn btn-primary" [routerLink]="['/city', city.uuid]">View</a>
+      <a class="btn btn-warning" [routerLink]="['/city/update', city.uuid]" >Update</a>
+    </td>
   </tr>
   </tbody>
 </table>
