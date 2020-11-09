@@ -7,6 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainNavComponent implements OnInit {
 
+  public actions: Array<any> = [
+    {name: 'Countries',link: '/country'},
+    {name: 'Quests',link: '/quests'},
+  ];
+
   constructor() { }
 
   ngOnInit(): void {

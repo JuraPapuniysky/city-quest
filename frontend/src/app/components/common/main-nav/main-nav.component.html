@@ -18,7 +18,7 @@
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
         <div class="dropdown-menu" aria-labelledby="dropdown01">
-          <a class="dropdown-item" [routerLink]="['/country']" href="#">Countries</a>
+          <a *ngFor="let action of actions" class="dropdown-item" [routerLink]="[action.link]" href="#">{{action.name}}</a>
         </div>
       </li>
     </ul>

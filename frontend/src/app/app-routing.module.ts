@@ -7,6 +7,7 @@ import {CityCreateComponent} from "./components/cities/city-create/city-create.c
 import {CountryCreateComponent} from "./components/country/country-create/country-create.component";
 import {CountryUpdateComponent} from "./components/country/country-update/country-update.component";
 import {CityUpdateComponent} from "./components/cities/city-update/city-update.component";
+import {QuestsComponent} from "./components/quests/quests.component";
 
 
 const routes: Routes = [
@@ -17,6 +18,8 @@ const routes: Routes = [
   {path: 'cities/:countryUuid', component: CitiesComponent},
   {path: 'city/create/:countryUuid', component: CityCreateComponent},
   {path: 'city/update/:uuid', component: CityUpdateComponent},
+
+  {path: 'quests', component: QuestsComponent}
 ];
 
 @NgModule({

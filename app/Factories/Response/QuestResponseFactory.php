@@ -36,7 +36,9 @@ class QuestResponseFactory extends AbstractResponseFactory
             $quests[] = [
                 'uuid' => $questEntity->getUuid(),
                 'countryUuid' => $questEntity->getCountryUuid(),
+                'country' => $questEntity->getCountryEntity(),
                 'cityUuid' => $questEntity->getCityUuid(),
+                'city' => $questEntity->getCityEntity(),
                 'name' => $questEntity->getName(),
                 'description' => $questEntity->getDescription(),
             ];
