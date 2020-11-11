@@ -26,10 +26,12 @@ final class UserCreateValidator extends AbstractValidator implements ValidatorIn
         $uniqueClassname = UserEntity::class;
 
         $this->validation = $this->validator->make([
+            'fullName' => $userRequestEntity->fullName,
             'email' => $userRequestEntity->email,
             'password' => $userRequestEntity->password,
             'confirmPassword' => $userRequestEntity->confirmPassword,
         ], [
+            'fullName' => 'required|max:255',
             'email' => "required|email|unique:$uniqueClassname,email",
             'password' => 'required|min:8',
             'confirmPassword' => 'required|same:password',

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="user_sessions", indexes={@ORM\Index(name="search_uuids", columns={"uuid", "user_uuid"})})
+ * @ORM\Table(name="user_sessions", indexes={@ORM\Index(name="search_uuids", columns={"uuid", "user_uuid"})}, options={"collate"="utf8mb4_unicode_ci", "charset"="utf8mb4"})
  */
 class SessionEntity
 {

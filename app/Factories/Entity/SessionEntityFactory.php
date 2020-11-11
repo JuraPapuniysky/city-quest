@@ -38,4 +38,17 @@ class SessionEntityFactory
 
         return $sessionEntity;
     }
+
+    public function update(SessionEntity $sessionEntity, UserEntity $userEntity): SessionEntity
+    {
+        $sessionEntity->setAccessToken($this->jwtCreator->encodeAccessToken([
+            'email' => $userEntity->getEmail()
+        ]));
+        $sessionEntity->setRefreshToken($this->jwtCreator->encodeRefreshToken([
+            'email' => $userEntity->getEmail(),
+        ]));
+        $sessionEntity->setUpdatedAt(new \DateTime('now'));
+
+        return $sessionEntity;
+    }
 }

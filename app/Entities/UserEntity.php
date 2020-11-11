@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="users")
+ * @ORM\Table(name="users", options={"collate"="utf8mb4_unicode_ci", "charset"="utf8mb4"})
  */
 class UserEntity
 {
@@ -24,6 +24,11 @@ class UserEntity
      * @ORM\Column(type="string", unique=true, nullable=false)
      */
     private $uuid;
+
+    /**
+     * @ORM\Column(type="string", name="full_name", unique=false, nullable=false)
+     */
+    private $fullName;
 
     /**
      * @ORM\Column(type="string", unique=true, nullable=false)
@@ -43,7 +48,7 @@ class UserEntity
     /**
      * @ORM\Column(type="boolean", options={"default": false}, name="is_confirmed", nullable=true)
      */
-    private $isConfimd;
+    private $isConfimed;
 
     /**
      * @ORM\Column(type="datetime", name="created_at", nullable=true)
@@ -65,50 +70,42 @@ class UserEntity
         $this->id = $id;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getUuid()
+    public function getUuid(): string
     {
         return $this->uuid;
     }
 
-    /**
-     * @param mixed $uuid
-     */
-    public function setUuid($uuid): void
+    public function setUuid(string $uuid): void
     {
         $this->uuid = $uuid;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getEmail()
+    public function getFullName(): string
+    {
+        return $this->fullName;
+    }
+
+    public function setFullName(string $fullName): void
+    {
+        $this->fullName = $fullName;
+    }
+
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    /**
-     * @param mixed $email
-     */
-    public function setEmail($email): void
+    public function setEmail(string $email): void
     {
         $this->email = $email;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getPasswordHash()
+    public function getPasswordHash(): string
     {
         return $this->passwordHash;
     }
 
-    /**
-     * @param mixed $passwordHash
-     */
-    public function setPasswordHash($passwordHash): void
+    public function setPasswordHash(string $passwordHash): void
     {
         $this->passwordHash = $passwordHash;
     }
@@ -124,14 +121,14 @@ class UserEntity
     }
 
 
-    public function getIsConfimd(): bool
+    public function getIsConfirmed(): bool
     {
-        return $this->isConfimd;
+        return $this->isConfimed;
     }
 
-    public function setIsConfimd(bool $isConfimd): void
+    public function setIsConfirmed(bool $isConfimed): void
     {
-        $this->isConfimd = $isConfimd;
+        $this->isConfimed = $isConfimed;
     }
 
     public function getCreatedAt(): \DateTime

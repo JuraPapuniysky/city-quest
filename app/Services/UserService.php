@@ -83,7 +83,7 @@ final class UserService
             throw new EntityNotFoundException('User not found', 404);
         }
 
-        $userEntity->setIsConfimd(true);
+        $userEntity->setIsConfirmed(true);
         $this->userRepository->save($userEntity);
 
         return $userEntity;
@@ -113,8 +113,10 @@ final class UserService
             }
 
             $sessionEntity = $this->sessionEntityFactory->create($authEntity, $userEntity);
-            $this->sessionRepository->save($sessionEntity);
         }
+
+        $sessionEntity = $this->sessionEntityFactory->update($sessionEntity, $userEntity);
+        $this->sessionRepository->save($sessionEntity);
 
         return $sessionEntity;
     }

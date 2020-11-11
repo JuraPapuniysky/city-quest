@@ -25,6 +25,7 @@ final class UserEntityFactory
     {
         $userEntity = new UserEntity();
         $userEntity->setUuid($this->uuidGenerator->generate());
+        $userEntity->setFullName($userRequestEntity->fullName);
         $userEntity->setEmail($userRequestEntity->email);
         $userEntity->setPasswordHash($this->passwordHash->hash($userRequestEntity->password));
         $userEntity->setRegistrationConfirmToken($this->uuidGenerator->generate());

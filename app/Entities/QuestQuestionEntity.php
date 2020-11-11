@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="quest_questions", indexes={@ORM\Index(name="uuid", columns={"uuid"})})
+ * @ORM\Table(name="quest_questions", indexes={@ORM\Index(name="uuid", columns={"uuid"})}, options={"collate"="utf8mb4_unicode_ci", "charset"="utf8mb4"})
  */
 class QuestQuestionEntity
 {

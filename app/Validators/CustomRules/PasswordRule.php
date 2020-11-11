@@ -42,7 +42,7 @@ final class PasswordRule extends Rule
             return false;
         }
 
-        if ($userEntity->getIsConfimd() !== true) {
+        if ($userEntity->getIsConfirmed() !== true) {
             $this->message = "User is not confirmed";
 
             return false;

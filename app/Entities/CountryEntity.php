@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="countries", indexes={@ORM\Index(name="uuid", columns={"uuid"})})
+ * @ORM\Table(name="countries", indexes={@ORM\Index(name="uuid", columns={"uuid"})}, options={"collate"="utf8mb4_unicode_ci", "charset"="utf8mb4"})
  */
 class CountryEntity
 {
