@@ -16,6 +16,8 @@ use App\Factories\Entity\Request\RequestEntityFactoryInterface;
 use App\Factories\Entity\Request\RequestEntityFactory;
 use PsrFramework\Adapters\JWT\JWTInterface;
 use PsrFramework\Adapters\JWT\FireBaseJWTAdapter;
+use PsrFramework\Services\CheckAuth\CheckAuthInterface;
+use PsrFramework\Factories\CheckAuthServiceFactory;
 
 /** @var ContainerInterface $container */
 
@@ -49,6 +51,7 @@ return [
         }),
         JWTInterface::class => DI\factory(function () use ($jwt) {
             return new FireBaseJWTAdapter($jwt['key'], $jwt['payload'], $jwt['accessTokenLifetime'], $jwt['refreshTokenLifetime']);
-        })
+        }),
+        CheckAuthInterface::class => (new CheckAuthServiceFactory())(),
     ],
 ];

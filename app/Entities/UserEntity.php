@@ -6,12 +6,13 @@ namespace App\Entities;
 
 
 use Doctrine\ORM\Mapping as ORM;
+use PsrFramework\Services\CheckAuth\IdentityInterface;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="users", options={"collate"="utf8mb4_unicode_ci", "charset"="utf8mb4"})
  */
-class UserEntity
+class UserEntity implements IdentityInterface
 {
     /**
      * @ORM\Id

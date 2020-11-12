@@ -12,6 +12,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use PsrFramework\Services\CheckAuth\CheckAuthInterface;
 use function FastRoute\simpleDispatcher;
 
 class Router implements MiddlewareInterface
@@ -20,37 +21,40 @@ class Router implements MiddlewareInterface
 
     private RouteCollector $routerCollector;
 
+    private CheckAuthInterface $checkAuthService;
+
     private array $routes = [];
 
 
-    public function __construct(InvokerInterface $invoker)
+    public function __construct(InvokerInterface $invoker, CheckAuthInterface $checkAuthService)
     {
         $this->invoker = $invoker;
+        $this->checkAuthService = $checkAuthService;
     }
 
-    public function get(string $name, string $pattern, array $handler): void
+    public function get(string $name, string $pattern, array $handler, bool $auth = false): void
     {
-        $this->routes[] = ['httpMethod' => 'GET', 'route' => $pattern, 'handler' => $handler];
+        $this->routes[] = ['httpMethod' => 'GET', 'route' => $pattern, 'handler' => $handler, 'auth' => $auth];
     }
 
-    public function post(string $name, string $pattern, array $handler): void
+    public function post(string $name, string $pattern, array $handler, bool $auth = false): void
     {
-        $this->routes[] = ['httpMethod' => 'POST', 'route' => $pattern, 'handler' => $handler];
+        $this->routes[] = ['httpMethod' => 'POST', 'route' => $pattern, 'handler' => $handler, 'auth' => $auth];
     }
 
-    public function put(string $name, string $pattern, array $handler): void
+    public function put(string $name, string $pattern, array $handler, bool $auth = false): void
     {
-        $this->routes[] = ['httpMethod' => 'PUT', 'route' => $pattern, 'handler' => $handler];
+        $this->routes[] = ['httpMethod' => 'PUT', 'route' => $pattern, 'handler' => $handler, 'auth' => $auth];
     }
 
-    public function patch(string $name, string $pattern, array $handler): void
+    public function patch(string $name, string $pattern, array $handler, bool $auth = false): void
     {
-        $this->routes[] = ['httpMethod' => 'PATCH', 'route' => $pattern, 'handler' => $handler];
+        $this->routes[] = ['httpMethod' => 'PATCH', 'route' => $pattern, 'handler' => $handler, 'auth' => $auth];
     }
 
-    public function delete(string $name, string $pattern, array $handler): void
+    public function delete(string $name, string $pattern, array $handler, bool $auth = false): void
     {
-        $this->routes[] = ['httpMethod' => 'DELETE', 'route' => $pattern, 'handler' => $handler];
+        $this->routes[] = ['httpMethod' => 'DELETE', 'route' => $pattern, 'handler' => $handler, 'auth' => $auth];
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
@@ -82,6 +86,9 @@ class Router implements MiddlewareInterface
 
                 return new JsonResponse($message, $code);
             case Dispatcher::FOUND:
+                if ($routeInfo[3] === true) {
+                    $this->checkAuthService->checkIdentity($request->getAttribute('authUserEntity'));
+                }
                 $controllerHandler = $routeInfo[1];
                 $vars['request'] = $request;
                 foreach ($routeInfo[2] as $varName => $value) {

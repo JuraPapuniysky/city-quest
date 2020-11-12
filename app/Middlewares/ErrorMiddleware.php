@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Middlewares;
 
 use Laminas\Diactoros\Response\JsonResponse;
+use phpDocumentor\Reflection\Types\Integer;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -29,7 +30,16 @@ class ErrorMiddleware implements MiddlewareInterface
                 'trace' => $e->getTrace()
             ]);
 
-            return new JsonResponse(['error' => $e->getMessage()], 500);
+            $code = $e->getCode();
+
+            if ($code instanceof Integer === false) {
+                $code = 500;
+            }
+
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], $code);
         }
     }
 }

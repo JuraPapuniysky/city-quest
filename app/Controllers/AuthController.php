@@ -7,6 +7,7 @@ namespace App\Controllers;
 use App\Exceptions\ValidationException;
 use App\Services\UserService;
 use Doctrine\ORM\EntityNotFoundException;
+use Firebase\JWT\ExpiredException;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -78,5 +79,23 @@ final class AuthController
             'request' => $request->getAttribute('authUserEntity'),
             'message' => $request->getAttribute('authError'),
         ], 404);
+    }
+
+    public function refresh(ServerRequestInterface $request): ResponseInterface
+    {
+        try {
+            $session = $this->userService->refreshSession($request);
+        } catch (ExpiredException $e) {
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => $e->getMessage(),
+            ]);
+        }
+
+        return new JsonResponse([
+            'status' => 'success',
+            'accessToken' => $session->getAccessToken(),
+            'refreshToken' => $session->getRefreshToken(),
+        ]);
     }
 }

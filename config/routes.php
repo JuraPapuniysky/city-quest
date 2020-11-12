@@ -12,6 +12,7 @@ $app->post('registration', '/api/v1/auth/registration', [\App\Controllers\AuthCo
 $app->put('confirmUser', '/api/v1/auth/confirm/{confirmToken}', [\App\Controllers\AuthController::class, 'confirm']);
 $app->post('auth', '/api/v1/auth', [\App\Controllers\AuthController::class, 'auth']);
 $app->post('checkAccessToken', '/api/v1/auth/check', [\App\Controllers\AuthController::class, 'checkAccessToken']);
+$app->post('refreshAuth', '/api/v1/auth/refresh', [\App\Controllers\AuthController::class, 'refresh']);
 
 //Country controller
 $app->get('country', '/api/v1/country/{uuid}', [\App\Controllers\CountryController::class, 'country']);

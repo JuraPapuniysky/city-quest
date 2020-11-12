@@ -8,6 +8,7 @@ use App\Entities\Request\AuthRequestEntity;
 use App\Entities\Request\UserRequestEntity;
 use App\Entities\SessionEntity;
 use App\Entities\UserEntity;
+use App\Exceptions\RefreshTokenException;
 use App\Exceptions\ValidationException;
 use App\Factories\Entity\Request\RequestEntityFactoryInterface;
 use App\Factories\Entity\SessionEntityFactory;
@@ -18,8 +19,12 @@ use App\Validators\AuthValidator;
 use App\Validators\UserCreateValidator;
 use Doctrine\ORM\EntityNotFoundException;
 use Psr\Http\Message\ServerRequestInterface;
+use PsrFramework\Adapters\JWT\JWTInterface;
+use PsrFramework\Services\CheckAuth\CheckAuthInterface;
+use PsrFramework\Services\CheckAuth\CheckAuthService;
+use PsrFramework\Services\CheckAuth\IdentityInterface;
 
-final class UserService
+final class UserService extends CheckAuthService
 {
     const MAX_USER_SESSIONS = 5;
 
@@ -37,6 +42,8 @@ final class UserService
 
     private SessionRepository $sessionRepository;
 
+    private JWTInterface $jwt;
+
     public function __construct(
         UserRepository $userRepository,
         RequestEntityFactoryInterface $requestEntityFactory,
@@ -44,7 +51,8 @@ final class UserService
         UserEntityFactory $userEntityFactory,
         SessionEntityFactory $sessionEntityFactory,
         AuthValidator $authValidator,
-        SessionRepository $sessionRepository
+        SessionRepository $sessionRepository,
+        JWTInterface $jwt
     ) {
         $this->userRepository = $userRepository;
         $this->requestEntityFactory = $requestEntityFactory;
@@ -53,6 +61,7 @@ final class UserService
         $this->sessionEntityFactory = $sessionEntityFactory;
         $this->authValidator = $authValidator;
         $this->sessionRepository = $sessionRepository;
+        $this->jwt = $jwt;
     }
 
     public function create(ServerRequestInterface $request): UserEntity
@@ -123,6 +132,18 @@ final class UserService
 
     public function refreshSession(ServerRequestInterface $request): SessionEntity
     {
+        $refreshToken = $request->getHeaderLine('Refresh-Token');
 
+        if ($refreshToken === null) {
+            throw new RefreshTokenException('Token does not exists', 404);
+        }
+
+        $session = $this->sessionRepository->findOneByCriteria(['refreshToken' => $refreshToken]);
+        $payload = $this->jwt->decode($refreshToken);
+        $userEntity = $this->userRepository->findUserEntityByEmail($payload->data->email);
+        $session = $this->sessionEntityFactory->update($session, $userEntity);
+        $this->sessionRepository->save($session);
+
+        return $session;
     }
 }

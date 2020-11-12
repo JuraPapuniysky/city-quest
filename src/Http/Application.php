@@ -38,29 +38,29 @@ class Application implements RequestHandlerInterface, MiddlewareInterface
         }
     }
 
-    public function get(string $name, $pattern, array $handler): void
+    public function get(string $name, $pattern, array $handler, bool $auth = false): void
     {
-        $this->router->get($name, $pattern, $handler);
+        $this->router->get($name, $pattern, $handler, $auth);
     }
 
-    public function post(string $name, $pattern, array $handler): void
+    public function post(string $name, $pattern, array $handler, bool $auth = false): void
     {
-        $this->router->post($name, $pattern, $handler);
+        $this->router->post($name, $pattern, $handler, $auth);
     }
 
-    public function put(string $name, $pattern, array $handler): void
+    public function put(string $name, $pattern, array $handler, bool $auth = false): void
     {
-        $this->router->put($name, $pattern, $handler);
+        $this->router->put($name, $pattern, $handler, $auth);
     }
 
-    public function patch(string $name, $pattern, array $handler): void
+    public function patch(string $name, $pattern, array $handler, bool $auth = false): void
     {
-        $this->router->patch($name, $pattern, $handler);
+        $this->router->patch($name, $pattern, $handler, $auth);
     }
 
-    public function delete(string $name, $pattern, array $handler): void
+    public function delete(string $name, $pattern, array $handler, bool $auth = false): void
     {
-        $this->router->delete($name, $pattern, $handler);
+        $this->router->delete($name, $pattern, $handler, $auth);
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
