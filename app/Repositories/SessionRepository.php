@@ -7,7 +7,6 @@ namespace App\Repositories;
 use App\Entities\SessionEntity;
 use App\Entities\UserEntity;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ObjectRepository;
 
 final class SessionRepository extends BaseRepository
 {
