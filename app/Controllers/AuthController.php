@@ -78,7 +78,7 @@ final class AuthController
             'status' => 'error',
             'request' => $request->getAttribute('authUserEntity'),
             'message' => $request->getAttribute('authError'),
-        ], 404);
+        ], 412);
     }
 
     public function refresh(ServerRequestInterface $request): ResponseInterface

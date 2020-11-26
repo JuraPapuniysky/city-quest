@@ -87,7 +87,7 @@ class Router implements MiddlewareInterface
                 return new JsonResponse($message, $code);
             case Dispatcher::FOUND:
                 if ($routeInfo[3] === true) {
-                    $this->checkAuthService->checkIdentity($request->getAttribute('authUserEntity'));
+                    $this->checkAuthService->checkIdentity($request);
                 }
                 $controllerHandler = $routeInfo[1];
                 $vars['request'] = $request;
