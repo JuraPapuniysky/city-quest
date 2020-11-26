@@ -6,5 +6,4 @@ namespace PsrFramework\Services\CheckAuth;
 
 interface IdentityInterface
 {
-
 }

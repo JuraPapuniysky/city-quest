@@ -31,4 +31,3 @@ final class SessionRepository extends BaseRepository
         ]);
     }
 }
-

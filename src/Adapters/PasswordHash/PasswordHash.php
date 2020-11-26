@@ -6,7 +6,6 @@ namespace PsrFramework\Adapters\PasswordHash;
 
 class PasswordHash implements PasswordHashInterface
 {
-
     public function hash(string $password): string
     {
         return password_hash($password, PASSWORD_DEFAULT);

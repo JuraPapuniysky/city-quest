@@ -8,7 +8,6 @@ use Ramsey\Uuid\Uuid;
 
 class RamseyUuidAdapter implements UuidGeneratorInterface
 {
-
     public function generate(): string
     {
         $uuid = Uuid::uuid6();

@@ -30,7 +30,7 @@ final class EntityExistsRule extends Rule
         $table = $this->parameter('table');
         $except = $this->parameter('except');
 
-        if ($except AND $except == $value) {
+        if ($except and $except == $value) {
             return true;
         }
 

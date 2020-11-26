@@ -11,7 +11,6 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class CORSMiddleware implements MiddlewareInterface
 {
-
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         header("Access-Control-Allow-Origin: *");

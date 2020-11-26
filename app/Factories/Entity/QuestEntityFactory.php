@@ -44,5 +44,4 @@ final class QuestEntityFactory
 
         return $questEntity;
     }
-
 }

@@ -27,7 +27,7 @@ final class QuestController
 
     public function quest(ServerRequestInterface $request, string $uuid): ResponseInterface
     {
-        try{
+        try {
             $questEntity = $this->questService->getQuestByUuid($uuid);
         } catch (EntityNotFoundException $e) {
             return $this->questResponseFactory->notFound($e);

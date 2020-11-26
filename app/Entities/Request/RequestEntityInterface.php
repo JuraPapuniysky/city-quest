@@ -6,5 +6,4 @@ namespace App\Entities\Request;
 
 interface RequestEntityInterface
 {
-
 }

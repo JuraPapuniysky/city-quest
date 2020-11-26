@@ -40,10 +40,9 @@ final class UserCreateValidator extends AbstractValidator implements ValidatorIn
         $this->validation->validate();
 
         if ($this->validation->fails()) {
-           return false;
+            return false;
         }
 
         return true;
     }
-
 }

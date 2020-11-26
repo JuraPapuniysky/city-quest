@@ -35,7 +35,7 @@ return [
 
             return $logger;
         }),
-        EntityManagerInterface::class => DI\factory(function () use($db) {
+        EntityManagerInterface::class => DI\factory(function () use ($db) {
             $isDevMode = true;
             $proxyDir = null;
             $cache = null;
