@@ -135,12 +135,13 @@ final class UserService extends CheckAuthService
         $refreshToken = $request->getHeaderLine('Refresh-Token');
 
         if ($refreshToken === null) {
-            throw new RefreshTokenException('Token does not exists', 404);
+            throw new RefreshTokenException('Token does not exists', 403);
         }
 
-        $session = $this->sessionRepository->findOneByCriteria(['refreshToken' => $refreshToken]);
         $payload = $this->jwt->decode($refreshToken);
         $userEntity = $this->userRepository->findUserEntityByEmail($payload->data->email);
+        $session = $this->sessionRepository->findSessionByUserFingerPrint($userEntity, $payload->data->fingerPrint);
+
         $session = $this->sessionEntityFactory->update($session, $userEntity);
         $this->sessionRepository->save($session);
 

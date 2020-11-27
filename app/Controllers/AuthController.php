@@ -84,6 +84,7 @@ final class AuthController
     public function refresh(ServerRequestInterface $request): ResponseInterface
     {
         try {
+
             $session = $this->userService->refreshSession($request);
         } catch (ExpiredException $e) {
             return new JsonResponse([

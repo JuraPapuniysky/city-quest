@@ -31,6 +31,7 @@ class SessionEntityFactory
         ]));
         $sessionEntity->setRefreshToken($this->jwtCreator->encodeRefreshToken([
             'email' => $userEntity->getEmail(),
+            'fingerPrint' => $requestEntity->fingerPrint,
         ]));
         $sessionEntity->setUserUuid($userEntity->getUuid());
         $sessionEntity->setFingerPrint($requestEntity->fingerPrint);
@@ -46,6 +47,7 @@ class SessionEntityFactory
         ]));
         $sessionEntity->setRefreshToken($this->jwtCreator->encodeRefreshToken([
             'email' => $userEntity->getEmail(),
+            'fingerPrint' => $sessionEntity->getFingerPrint(),
         ]));
         $sessionEntity->setUpdatedAt(new \DateTime('now'));
 

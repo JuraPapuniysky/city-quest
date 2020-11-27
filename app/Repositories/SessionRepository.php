@@ -7,6 +7,7 @@ namespace App\Repositories;
 use App\Entities\SessionEntity;
 use App\Entities\UserEntity;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityNotFoundException;
 
 final class SessionRepository extends BaseRepository
 {
@@ -16,12 +17,18 @@ final class SessionRepository extends BaseRepository
         $this->repository = $this->entityManager->getRepository(SessionEntity::class);
     }
 
-    public function findSessionByUserFingerPrint(UserEntity $userEntity, string $fingerPrint): ?SessionEntity
+    public function findSessionByUserFingerPrint(UserEntity $userEntity, string $fingerPrint): SessionEntity
     {
-        return $this->entityManager->getRepository(SessionEntity::class)->findOneBy([
+        $sessionEntity = $this->entityManager->getRepository(SessionEntity::class)->findOneBy([
             'userUuid' => $userEntity->getUuid(),
             'fingerPrint' => $fingerPrint,
         ]);
+
+        if ($sessionEntity === null) {
+            throw new EntityNotFoundException('Session entity not found');
+        }
+
+        return $sessionEntity;
     }
 
     public function findSessionEntitiesByUser(UserEntity $userEntity): array
