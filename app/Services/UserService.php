@@ -112,9 +112,10 @@ final class UserService extends CheckAuthService
             throw new EntityNotFoundException('User not found', 404);
         }
 
-        $sessionEntity = $this->sessionRepository->findSessionByUserFingerPrint($userEntity, $authEntity->fingerPrint);
-
-        if ($sessionEntity === null) {
+        try {
+            $sessionEntity = $this->sessionRepository->findSessionByUserFingerPrint($userEntity,
+                $authEntity->fingerPrint);
+        } catch (EntityNotFoundException $e) {
             $userSessions = $this->sessionRepository->findSessionEntitiesByUser($userEntity);
 
             if (count($userSessions) >= self::MAX_USER_SESSIONS) {
