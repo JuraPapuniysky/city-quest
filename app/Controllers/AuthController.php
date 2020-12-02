@@ -90,7 +90,7 @@ final class AuthController
             return new JsonResponse([
                 'status' => 'error',
                 'message' => $e->getMessage(),
-            ]);
+            ], 401);
         }
 
         return new JsonResponse([
