@@ -21,6 +21,7 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
+            "Geo\\": "geo/",
             "PsrFramework\\": "src/",
             "Tests\\": "tests/",
             "DataBase\\": "database/"

@@ -113,8 +113,10 @@ final class UserService extends CheckAuthService
         }
 
         try {
-            $sessionEntity = $this->sessionRepository->findSessionByUserFingerPrint($userEntity,
-                $authEntity->fingerPrint);
+            $sessionEntity = $this->sessionRepository->findSessionByUserFingerPrint(
+                $userEntity,
+                $authEntity->fingerPrint
+            );
         } catch (EntityNotFoundException $e) {
             $userSessions = $this->sessionRepository->findSessionEntitiesByUser($userEntity);
 

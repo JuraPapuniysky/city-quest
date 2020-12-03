@@ -3,3 +3,4 @@ vendor
 .env
 .php_cs.cache
 php-cs-fixer
+composer.phar
