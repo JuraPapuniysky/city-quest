@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Controllers;
+namespace Geo\Controllers;
 
 use App\Exceptions\ValidationException;
-use App\Factories\Response\CountryResponseFactory;
-use App\Services\CountryService;
+use Geo\Factories\Response\CountryResponseFactory;
+use Geo\Services\CountryService;
 use Doctrine\ORM\EntityNotFoundException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Factories\Response;
+namespace Geo\Factories\Response;
 
 use App\Entities\CountryEntity;
+use App\Factories\Response\AbstractResponseFactory;
 use Laminas\Diactoros\Response\JsonResponse;
 
 final class CountryResponseFactory extends AbstractResponseFactory

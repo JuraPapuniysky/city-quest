@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Repositories;
+namespace Geo\Repositories;
 
 use App\Entities\CityEntity;
 use App\Entities\CountryEntity;
+use App\Repositories\BaseRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
-use Doctrine\Persistence\ObjectRepository;
 
 class CityRepository extends BaseRepository
 {

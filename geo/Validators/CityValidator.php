@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Validators;
+namespace Geo\Validators;
 
 use App\Entities\CountryEntity;
 use App\Entities\Request\RequestEntityInterface;
+use App\Validators\AbstractValidator;
 use App\Validators\CustomRules\EntityExistsRule;
+use App\Validators\ValidatorInterface;
 use Rakit\Validation\Validator;
 
 final class CityValidator extends AbstractValidator implements ValidatorInterface

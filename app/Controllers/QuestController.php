@@ -6,7 +6,7 @@ namespace App\Controllers;
 
 use App\Exceptions\ValidationException;
 use App\Factories\Response\QuestResponseFactory;
-use App\Services\CountryService;
+use Geo\Services\CountryService;
 use App\Services\QuestService;
 use Doctrine\ORM\EntityNotFoundException;
 use Psr\Http\Message\ResponseInterface;

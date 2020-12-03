@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Services;
+namespace Geo\Services;
 
 use App\Entities\CountryEntity;
 use App\Entities\Request\CountryRequestEntity;
 use App\Exceptions\ValidationException;
-use App\Factories\Entity\CountryEntityFactory;
+use Geo\Factories\Entity\CountryEntityFactory;
 use App\Factories\Entity\Request\RequestEntityFactoryInterface;
-use App\Repositories\CountryRepository;
-use App\Validators\CountryValidator;
+use Geo\Repositories\CountryRepository;
+use Geo\Validators\CountryValidator;
 use Psr\Http\Message\ServerRequestInterface;
 
 class CountryService

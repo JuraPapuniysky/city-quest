@@ -15,18 +15,18 @@ $app->post('checkAccessToken', '/api/v1/auth/check', [\App\Controllers\AuthContr
 $app->post('refreshAuth', '/api/v1/auth/refresh', [\App\Controllers\AuthController::class, 'refresh']);
 
 //Country controller
-$app->get('country', '/api/v1/country/{uuid}', [\App\Controllers\CountryController::class, 'country'], true);
-$app->get('countries', '/api/v1/countries', [\App\Controllers\CountryController::class, 'countries'], true);
-$app->post('countryCreate', '/api/v1/country', [\App\Controllers\CountryController::class, 'create'], true);
-$app->put('countryUpdate', '/api/v1/country/{uuid}', [\App\Controllers\CountryController::class, 'update'], true);
-$app->delete('countryDelete', '/api/v1/country/{uuid}', [\App\Controllers\CountryController::class, 'delete'], true);
+$app->get('country', '/api/v1/country/{uuid}', [\Geo\Controllers\CountryController::class, 'country'], true);
+$app->get('countries', '/api/v1/countries', [\Geo\Controllers\CountryController::class, 'countries'], true);
+$app->post('countryCreate', '/api/v1/country', [\Geo\Controllers\CountryController::class, 'create'], true);
+$app->put('countryUpdate', '/api/v1/country/{uuid}', [\Geo\Controllers\CountryController::class, 'update'], true);
+$app->delete('countryDelete', '/api/v1/country/{uuid}', [\Geo\Controllers\CountryController::class, 'delete'], true);
 
 //CityController
-$app->get('city', '/api/v1/city/{uuid}', [\App\Controllers\CityController::class, 'city'], true);
-$app->get('cities', '/api/v1/cities/{countryUuid}', [\App\Controllers\CityController::class, 'cities'], true);
-$app->post('cityCreate', '/api/v1/city', [\App\Controllers\CityController::class, 'create'], true);
-$app->put('cityUpdate', '/api/v1/city/{uuid}', [\App\Controllers\CityController::class, 'update'], true);
-$app->delete('cityDelete', '/api/v1/city/{uuid}', [\App\Controllers\CityController::class, 'delete'], true);
+$app->get('city', '/api/v1/city/{uuid}', [\Geo\Controllers\CityController::class, 'city'], true);
+$app->get('cities', '/api/v1/cities/{countryUuid}', [\Geo\Controllers\CityController::class, 'cities'], true);
+$app->post('cityCreate', '/api/v1/city', [\Geo\Controllers\CityController::class, 'create'], true);
+$app->put('cityUpdate', '/api/v1/city/{uuid}', [\Geo\Controllers\CityController::class, 'update'], true);
+$app->delete('cityDelete', '/api/v1/city/{uuid}', [\Geo\Controllers\CityController::class, 'delete'], true);
 
 //QuestController
 $app->get('quest', '/api/v1/quest/{uuid}', [\App\Controllers\QuestController::class, 'quest'], true);

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Factories\Entity;
+namespace Geo\Factories\Entity;
 
 use App\Entities\CountryEntity;
 use App\Entities\Request\RequestEntityInterface;

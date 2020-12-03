@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Factories\Response;
+namespace Geo\Factories\Response;
 
 use App\Entities\CityEntity;
 use Laminas\Diactoros\Response\JsonResponse;

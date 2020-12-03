@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Services;
+namespace Geo\Services;
 
 use App\Entities\CityEntity;
 use App\Entities\CountryEntity;
 use App\Entities\Request\CityRequestEntity;
 use App\Exceptions\ValidationException;
-use App\Factories\Entity\CityEntityFactory;
+use Geo\Factories\Entity\CityEntityFactory;
 use App\Factories\Entity\Request\RequestEntityFactoryInterface;
-use App\Repositories\CityRepository;
-use App\Validators\CityValidator;
+use Geo\Repositories\CityRepository;
+use Geo\Validators\CityValidator;
 use Psr\Http\Message\ServerRequestInterface;
 
 class CityService
