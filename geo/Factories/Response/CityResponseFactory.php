@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Geo\Factories\Response;
 
 use App\Entities\CityEntity;
+use App\Factories\Response\AbstractResponseFactory;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 
