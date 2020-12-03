@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Controllers;
+namespace Quest\Controllers;
 
 use App\Exceptions\ValidationException;
-use App\Factories\Response\QuestResponseFactory;
+use Quest\Factories\Response\QuestResponseFactory;
 use Geo\Services\CountryService;
-use App\Services\QuestService;
+use Quest\Services\QuestService;
 use Doctrine\ORM\EntityNotFoundException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

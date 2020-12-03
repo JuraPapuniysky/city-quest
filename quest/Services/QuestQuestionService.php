@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Services;
+namespace Quest\Services;
 
 use App\Entities\QuestEntity;
 use App\Entities\QuestQuestionEntity;
 use App\Entities\Request\QuestQuestionRequestEntity;
 use App\Exceptions\ValidationException;
-use App\Factories\Entity\QuestQuestionFactory;
+use Quest\Factories\Entity\QuestQuestionFactory;
 use App\Factories\Entity\Request\RequestEntityFactoryInterface;
-use App\Factories\QuestQuestionTypesFactory;
-use App\Repositories\QuestQuestionRepository;
-use App\Validators\QuestQuestionValidator;
+use Quest\Factories\QuestQuestionTypesFactory;
+use Quest\Repositories\QuestQuestionRepository;
+use Quest\Validators\QuestQuestionValidator;
 use Psr\Http\Message\ServerRequestInterface;
 
 class QuestQuestionService

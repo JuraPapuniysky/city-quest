@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Validators;
+namespace Quest\Validators;
 
 use App\Entities\QuestEntity;
 use App\Entities\Request\RequestEntityInterface;
-use App\Factories\QuestQuestionTypesFactory;
+use App\Validators\AbstractValidator;
+use App\Validators\ValidatorInterface;
+use Quest\Factories\QuestQuestionTypesFactory;
 use App\Validators\CustomRules\EntityExistsRule;
 use Rakit\Validation\Validator;
 

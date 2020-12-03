@@ -2,14 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Validators;
+namespace Quest\Validators;
 
 use App\Entities\CityEntity;
 use App\Entities\CountryEntity;
 use App\Entities\QuestEntity;
 use App\Entities\Request\RequestEntityInterface;
+use App\Validators\AbstractValidator;
 use App\Validators\CustomRules\EntityExistsRule;
 use App\Validators\CustomRules\UniqueRule;
+use App\Validators\ValidatorInterface;
 use Rakit\Validation\Validator;
 
 final class QuestValidator extends AbstractValidator implements ValidatorInterface

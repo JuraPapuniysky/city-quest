@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Services;
+namespace Quest\Services;
 
 use App\Entities\CityEntity;
 use App\Entities\CountryEntity;
 use App\Entities\QuestEntity;
 use App\Entities\Request\QuestRequestEntity;
 use App\Exceptions\ValidationException;
-use App\Factories\Entity\QuestEntityFactory;
+use Quest\Factories\Entity\QuestEntityFactory;
 use App\Factories\Entity\Request\RequestEntityFactoryInterface;
-use App\Repositories\QuestRepository;
-use App\Validators\QuestValidator;
+use Quest\Repositories\QuestRepository;
+use Quest\Validators\QuestValidator;
 use Psr\Http\Message\ServerRequestInterface;
 
 class QuestService

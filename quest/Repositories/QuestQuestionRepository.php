@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Repositories;
+namespace Quest\Repositories;
 
 use App\Entities\QuestQuestionEntity;
+use App\Repositories\BaseRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class QuestQuestionRepository extends BaseRepository

@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Factories\Response;
+namespace Quest\Factories\Response;
 
 use App\Entities\QuestEntity;
+use App\Factories\Response\AbstractResponseFactory;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 

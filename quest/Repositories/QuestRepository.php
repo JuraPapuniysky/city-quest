@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Repositories;
+namespace Quest\Repositories;
 
 use App\Entities\QuestEntity;
+use App\Repositories\BaseRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityNotFoundException;
 
 class QuestRepository extends BaseRepository
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Factories\Entity;
+namespace Quest\Factories\Entity;
 
 use App\Entities\QuestQuestionEntity;
 use App\Entities\Request\QuestQuestionRequestEntity;

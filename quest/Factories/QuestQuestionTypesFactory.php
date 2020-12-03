@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Factories;
+namespace Quest\Factories;
 
 class QuestQuestionTypesFactory
 {
