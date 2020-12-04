@@ -14,21 +14,17 @@ use Psr\Http\Message\ServerRequestInterface;
 
 final class QuestController
 {
-    private QuestService $questService;
-    private QuestResponseFactory $questResponseFactory;
-    private CountryService $countryService;
-
-    public function __construct(QuestService $questService, QuestResponseFactory $questResponseFactory, CountryService $countryService)
-    {
-        $this->questService = $questService;
-        $this->questResponseFactory = $questResponseFactory;
-        $this->countryService = $countryService;
+    public function __construct(
+        private QuestService $questService,
+        private QuestResponseFactory $questResponseFactory,
+        private CountryService $countryService
+    ) {
     }
 
     public function quest(ServerRequestInterface $request, string $uuid): ResponseInterface
     {
         try {
-            $questEntity = $this->questService->getQuestByUuid($uuid);
+            $questEntity = $this->questService->getUserQuestByUuid($request, $uuid);
         } catch (EntityNotFoundException $e) {
             return $this->questResponseFactory->notFound($e);
         }
@@ -38,7 +34,7 @@ final class QuestController
 
     public function quests(ServerRequestInterface $request): ResponseInterface
     {
-        return $this->questResponseFactory->quests($this->questService->getQuests());
+        return $this->questResponseFactory->quests($this->questService->getUserQuests($request));
     }
 
     public function create(ServerRequestInterface $request): ResponseInterface
@@ -69,7 +65,7 @@ final class QuestController
     public function delete(ServerRequestInterface $request, string $uuid): ResponseInterface
     {
         try {
-            $questEntity = $this->questService->getQuestByUuid($uuid);
+            $questEntity = $this->questService->getUserQuestByUuid($request, $uuid);
             $this->questService->delete($questEntity);
         } catch (EntityNotFoundException $e) {
             return $this->questResponseFactory->notFound($e);

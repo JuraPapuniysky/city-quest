@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Entities\UserEntity;
 use App\Exceptions\ValidationException;
 use App\Services\UserService;
 use Doctrine\ORM\EntityNotFoundException;
@@ -68,7 +69,7 @@ final class AuthController
 
     public function checkAccessToken(ServerRequestInterface $request): ResponseInterface
     {
-        if ($request->getAttribute('authUserEntity') !== null) {
+        if ($request->getAttribute(UserEntity::class) !== null) {
             return new JsonResponse([
                 'status' => 'success',
             ], 200);
@@ -76,7 +77,7 @@ final class AuthController
 
         return new JsonResponse([
             'status' => 'error',
-            'request' => $request->getAttribute('authUserEntity'),
+            'request' => $request->getAttribute(UserEntity::class),
             'message' => $request->getAttribute('authError'),
         ], 412);
     }

@@ -8,6 +8,7 @@ use App\Entities\CityEntity;
 use App\Entities\CountryEntity;
 use App\Entities\QuestEntity;
 use App\Entities\Request\QuestRequestEntity;
+use App\Entities\UserEntity;
 use App\Exceptions\ValidationException;
 use Quest\Factories\Entity\QuestEntityFactory;
 use App\Factories\Entity\Request\RequestEntityFactoryInterface;
@@ -17,21 +18,12 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class QuestService
 {
-    private QuestRepository $questRepository;
-    private RequestEntityFactoryInterface $requestEntityFactory;
-    private QuestValidator $questValidator;
-    private QuestEntityFactory $questEntityFactory;
-
     public function __construct(
-        QuestRepository $questRepository,
-        RequestEntityFactoryInterface $requestEntityFactory,
-        QuestValidator $questValidator,
-        QuestEntityFactory $questEntityFactory
+        private QuestRepository $questRepository,
+        private RequestEntityFactoryInterface $requestEntityFactory,
+        private QuestValidator $questValidator,
+        private QuestEntityFactory $questEntityFactory
     ) {
-        $this->questRepository = $questRepository;
-        $this->requestEntityFactory = $requestEntityFactory;
-        $this->questValidator = $questValidator;
-        $this->questEntityFactory = $questEntityFactory;
     }
 
     public function getQuestByUuid(string $uuid): QuestEntity
@@ -39,6 +31,21 @@ class QuestService
         return $this->questRepository->findOneByCriteria([
             'uuid' => $uuid,
             'isDeleted' => false,
+        ]);
+    }
+
+    public function getUserQuestByUuid(ServerRequestInterface $request, $uuid): QuestEntity
+    {
+        return $this->questRepository->findOneByCriteria([
+            'uuid' => $uuid,
+            'userUuid' => $request->getAttribute(UserEntity::class),
+        ]);
+    }
+
+    public function getUserQuests(ServerRequestInterface $request): array
+    {
+        return $this->questRepository->findAllByCriteria([
+            'userUuid' => $request->getAttribute(UserEntity::class),
         ]);
     }
 
@@ -71,7 +78,7 @@ class QuestService
             throw new ValidationException($this->questValidator->errorsToString());
         }
 
-        $questEntity = $this->questEntityFactory->create($requestEntity);
+        $questEntity = $this->questEntityFactory->create($requestEntity, $request->getAttribute(UserEntity::class));
 
         $this->questRepository->save($questEntity);
 
@@ -86,7 +93,8 @@ class QuestService
             throw new ValidationException($this->questValidator->errorsToString());
         }
 
-        $questEntity = $this->questEntityFactory->update($requestEntity, $questEntity);
+        $questEntity = $this->questEntityFactory->update($requestEntity, $questEntity,
+            $request->getAttribute(UserEntity::class));
 
         return $this->questRepository->save($questEntity);
     }

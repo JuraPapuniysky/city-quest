@@ -15,13 +15,7 @@ class QuestResponseFactory extends AbstractResponseFactory
     {
         return new JsonResponse([
             'status' => 'success',
-            'quest' => [
-                'uuid' => $questEntity->getUuid(),
-                'countryUuid' => $questEntity->getCountryUuid(),
-                'cityUuid' => $questEntity->getCityUuid(),
-                'name' => $questEntity->getName(),
-                'description' => $questEntity->getDescription(),
-            ],
+            'quest' => $this->questToArray($questEntity),
         ], $status);
     }
 
@@ -34,18 +28,24 @@ class QuestResponseFactory extends AbstractResponseFactory
         $quests = [];
 
         foreach ($questEntities as $questEntity) {
-            $quests[] = [
-                'uuid' => $questEntity->getUuid(),
-                'countryUuid' => $questEntity->getCountryUuid(),
-                'cityUuid' => $questEntity->getCityUuid(),
-                'name' => $questEntity->getName(),
-                'description' => $questEntity->getDescription(),
-            ];
+            $quests[] = $this->questToArray($questEntity);
         }
 
         return new JsonResponse([
             'status' => 'success',
             'quests' => $quests,
         ], 200);
+    }
+
+    private function questToArray(QuestEntity $questEntity): array
+    {
+        return [
+            'uuid' => $questEntity->getUuid(),
+            'userUuid' => $questEntity->getUserUuid(),
+            'countryUuid' => $questEntity->getCountryUuid(),
+            'cityUuid' => $questEntity->getCityUuid(),
+            'name' => $questEntity->getName(),
+            'description' => $questEntity->getDescription(),
+        ];
     }
 }

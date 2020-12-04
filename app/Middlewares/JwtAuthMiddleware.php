@@ -39,9 +39,9 @@ class JwtAuthMiddleware implements MiddlewareInterface
                 throw new EntityNotFoundException('User not found', 412);
             }
 
-            return $handler->handle($request->withAttribute('authUserEntity', $userEntity));
+            return $handler->handle($request->withAttribute(UserEntity::class, $userEntity));
         } catch (\Throwable $e) {
-            return $handler->handle($request->withAttribute('authUserEntity', null)->withAttribute('authError', $e->getMessage()));
+            return $handler->handle($request->withAttribute(UserEntity::class, null)->withAttribute('authError', $e->getMessage()));
         }
     }
 }
