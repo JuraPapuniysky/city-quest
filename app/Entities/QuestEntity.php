@@ -30,9 +30,9 @@ class QuestEntity
     private ?bool $isDeleted = false;
 
     /**
-     * @ORM\Column(type="datetime", name="created_at", nullable=true)
+     * @ORM\Column(type="string", name="user_uuid", nullable=false)
      */
-    private ?\DateTime $createdAt;
+    private ?string $userUuid;
 
     /**
      * @ORM\Column(type="string", name="country_uuid", unique=false, nullable=false)
@@ -54,6 +54,10 @@ class QuestEntity
      */
     private ?string $description;
 
+    /**
+     * @ORM\Column(type="datetime", name="created_at", nullable=true)
+     */
+    private ?\DateTime $createdAt;
 
     /**
      * @ORM\Column(type="datetime", name="updated_at", nullable=true)
@@ -78,6 +82,16 @@ class QuestEntity
     public function setUuid(?string $uuid): void
     {
         $this->uuid = $uuid;
+    }
+
+    public function getUserUuid(): ?string
+    {
+        return $this->userUuid;
+    }
+
+    public function setUserUuid(?string $userUuid): void
+    {
+        $this->userUuid = $userUuid;
     }
 
     public function getCountryUuid(): ?string
