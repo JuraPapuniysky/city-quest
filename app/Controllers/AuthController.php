@@ -6,6 +6,7 @@ namespace App\Controllers;
 
 use App\Entities\UserEntity;
 use App\Exceptions\ValidationException;
+use App\Factories\Entity\Request\RequestEntityFactoryInterface;
 use App\Services\UserService;
 use Doctrine\ORM\EntityNotFoundException;
 use Firebase\JWT\ExpiredException;
@@ -15,17 +16,16 @@ use Psr\Http\Message\ServerRequestInterface;
 
 final class AuthController
 {
-    private UserService $userService;
-
-    public function __construct(UserService $userService)
-    {
-        $this->userService = $userService;
+    public function __construct(
+        private UserService $userService,
+        private RequestEntityFactoryInterface $requestEntityFactory
+    ) {
     }
 
     public function registration(ServerRequestInterface $request): ResponseInterface
     {
         try {
-            $this->userService->create($request);
+            $this->userService->create($this->requestEntityFactory->create($request));
         } catch (ValidationException $e) {
             return new JsonResponse([
                 'status' => 'validation error',

@@ -74,6 +74,15 @@ class CountryService
         return $countryEntity;
     }
 
+    /**
+     * @param string $prefixName
+     * @return CountryEntity[]
+     */
+    public function search(string $prefixName): array
+    {
+
+    }
+
     public function delete(CountryEntity $countryEntity): void
     {
         $countryEntity->setIsDeleted(true);
