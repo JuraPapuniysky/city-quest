@@ -53,7 +53,7 @@ class CreateUserCommand extends Command
             return Command::SUCCESS;
         } catch (\Throwable $e) {
             $output->writeln([
-                'error' => $e->getMessage(),
+                'error ' . $e->getMessage(),
             ]);
 
             return Command::FAILURE;
