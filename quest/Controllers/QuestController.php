@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Quest\Controllers;
 
+use App\Entities\UserEntity;
 use App\Exceptions\ValidationException;
 use Quest\Factories\Response\QuestResponseFactory;
 use Geo\Services\CountryService;
@@ -40,26 +41,29 @@ final class QuestController
     public function create(ServerRequestInterface $request): ResponseInterface
     {
         try {
-            $questEntity = $this->questService->create($request);
+            $requestEntity = $this->questService->createRequestEntity($request);
+            $questEntity = $this->questService->create($requestEntity, $request->getAttribute(UserEntity::class));
+
+            return $this->questResponseFactory->quest($questEntity, 201);
         } catch (ValidationException $e) {
             return $this->questResponseFactory->validationError($e);
         }
-
-        return $this->questResponseFactory->quest($questEntity, 201);
     }
 
     public function update(ServerRequestInterface $request, string $uuid): ResponseInterface
     {
         try {
-            $questEntity = $this->questService->getQuestByUuid($uuid);
-            $questEntity = $this->questService->update($request, $questEntity);
+            $questEntity = $this->questService->getUserQuestByUuid($request, $uuid);
+            $requestEntity = $this->questService->createRequestEntity($request);
+
+            $questEntity = $this->questService->update($requestEntity, $questEntity, $request->getAttribute(UserEntity::class));
+
+            return $this->questResponseFactory->quest($questEntity, 201);
         } catch (ValidationException $e) {
             return $this->questResponseFactory->validationError($e);
         } catch (EntityNotFoundException $e) {
             return $this->questResponseFactory->notFound($e);
         }
-
-        return $this->questResponseFactory->quest($questEntity, 201);
     }
 
     public function delete(ServerRequestInterface $request, string $uuid): ResponseInterface
@@ -67,10 +71,10 @@ final class QuestController
         try {
             $questEntity = $this->questService->getUserQuestByUuid($request, $uuid);
             $this->questService->delete($questEntity);
+
+            return $this->questResponseFactory->deleted();
         } catch (EntityNotFoundException $e) {
             return $this->questResponseFactory->notFound($e);
         }
-
-        return $this->questResponseFactory->deleted();
     }
 }

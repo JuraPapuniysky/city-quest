@@ -8,6 +8,7 @@ use App\Entities\CityEntity;
 use App\Entities\CountryEntity;
 use App\Entities\QuestEntity;
 use App\Entities\Request\QuestRequestEntity;
+use App\Entities\Request\RequestEntityInterface;
 use App\Entities\UserEntity;
 use App\Exceptions\ValidationException;
 use Quest\Factories\Entity\QuestEntityFactory;
@@ -70,31 +71,34 @@ class QuestService
         ]);
     }
 
-    public function create(ServerRequestInterface $request): QuestEntity
+    public function createRequestEntity(ServerRequestInterface $request): RequestEntityFactoryInterface
     {
-        $requestEntity = $this->requestEntityFactory->create($request, QuestRequestEntity::class);
+        return $this->requestEntityFactory->create($request, QuestRequestEntity::class);
+    }
 
+    public function create(RequestEntityInterface $requestEntity, UserEntity $userEntity): QuestEntity
+    {
         if ($this->questValidator->validate($requestEntity) === false) {
             throw new ValidationException($this->questValidator->errorsToString());
         }
 
-        $questEntity = $this->questEntityFactory->create($requestEntity, $request->getAttribute(UserEntity::class));
+        $questEntity = $this->questEntityFactory->create($requestEntity, $userEntity);
 
         $this->questRepository->save($questEntity);
 
         return $questEntity;
     }
 
-    public function update(ServerRequestInterface $request, QuestEntity $questEntity): QuestEntity
-    {
-        $requestEntity = $this->requestEntityFactory->create($request, QuestRequestEntity::class);
-
+    public function update(
+        RequestEntityInterface $requestEntity,
+        QuestEntity $questEntity,
+        UserEntity $userEntity
+    ): QuestEntity {
         if ($this->questValidator->validate($requestEntity) === false) {
             throw new ValidationException($this->questValidator->errorsToString());
         }
 
-        $questEntity = $this->questEntityFactory->update($requestEntity, $questEntity,
-            $request->getAttribute(UserEntity::class));
+        $questEntity = $this->questEntityFactory->update($requestEntity, $questEntity, $userEntity);
 
         return $this->questRepository->save($questEntity);
     }
