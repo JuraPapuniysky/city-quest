@@ -39,16 +39,24 @@ class CreateUserCommand extends Command
         $requestEntity->password = $input->getArgument('password');
         $requestEntity->confirmPassword = $input->getArgument('password');
 
-        $userEntity = $this->userService->create($requestEntity);
+        try {
+            $userEntity = $this->userService->create($requestEntity);
 
-        $userEntity = $this->userService->confirmUser($userEntity->getRegistrationConfirmToken());
+            $userEntity = $this->userService->confirmUser($userEntity->getRegistrationConfirmToken());
 
-        $output->writeln([
-            'User created',
-            'Email ' . $userEntity->getEmail(),
-            'Full name ' . $userEntity->getFullName(),
-        ]);
+            $output->writeln([
+                'User created',
+                'Email ' . $userEntity->getEmail(),
+                'Full name ' . $userEntity->getFullName(),
+            ]);
 
-        return Command::SUCCESS;
+            return Command::SUCCESS;
+        } catch (\Throwable $e) {
+            $output->writeln([
+                'error' => $e->getMessage(),
+            ]);
+
+            return Command::FAILURE;
+        }
     }
 }
