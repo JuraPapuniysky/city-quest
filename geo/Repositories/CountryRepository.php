@@ -10,7 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\Persistence\ObjectRepository;
 
-final class CountryRepository extends BaseRepository
+final class CountryRepository extends BaseRepository implements CountryRepositoryInterface
 {
     public function __construct(EntityManagerInterface $entityManager)
     {
@@ -37,5 +37,18 @@ final class CountryRepository extends BaseRepository
         }
 
         return $country;
+    }
+
+    public function getCountries(string $prefix, int $count): array
+    {
+        $builder = $this->entityManager->getRepository(CountryEntity::class)
+            ->createQueryBuilder('CountryEntity');
+        $builder->setMaxResults($count);
+        $builder->where('CountryEntity.name LIKE :prefix', )
+            ->setParameter('prefix', "$prefix%");
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
     }
 }

@@ -10,27 +10,22 @@ use App\Entities\Request\CityRequestEntity;
 use App\Exceptions\ValidationException;
 use Geo\Factories\Entity\CityEntityFactory;
 use App\Factories\Entity\Request\RequestEntityFactoryInterface;
+use Geo\Factories\ExternalGeoRepositoryFactory;
 use Geo\Repositories\CityRepository;
 use Geo\Validators\CityValidator;
 use Psr\Http\Message\ServerRequestInterface;
 
 class CityService
 {
-    private CityRepository $cityRepository;
-    private RequestEntityFactoryInterface $requestEntityFactory;
-    private CityEntityFactory $cityEntityFactory;
-    private CityValidator $cityValidator;
+    public const CITY_SEARCH_COUNT = 5;
 
     public function __construct(
-        CityRepository $cityRepository,
-        RequestEntityFactoryInterface $requestEntityFactory,
-        CityEntityFactory $cityEntityFactory,
-        CityValidator $cityValidator
+        private CityRepository $cityRepository,
+        private RequestEntityFactoryInterface $requestEntityFactory,
+        private CityEntityFactory $cityEntityFactory,
+        private CityValidator $cityValidator,
+        private ExternalGeoRepositoryFactory $externalGeoRepositoryFactory,
     ) {
-        $this->cityRepository = $cityRepository;
-        $this->requestEntityFactory = $requestEntityFactory;
-        $this->cityEntityFactory = $cityEntityFactory;
-        $this->cityValidator = $cityValidator;
     }
 
     /**
@@ -75,6 +70,23 @@ class CityService
         $this->cityRepository->save($city);
 
         return $city;
+    }
+
+
+    public function search(CountryEntity $countryEntity, string $prefix): array
+    {
+        $cityEntities = $this->cityRepository->getCities($countryEntity, $prefix, self::CITY_SEARCH_COUNT);
+
+        if (empty($cityEntities)) {
+            $cityExternalRepository = $this->externalGeoRepositoryFactory->createCityRepository();
+            $cityEntities = $cityExternalRepository->getCities($countryEntity, $prefix, self::CITY_SEARCH_COUNT);
+
+            foreach ($cityEntities as $cityEntity) {
+                $this->cityRepository->save($cityEntity);
+            }
+        }
+
+        return $cityEntities;
     }
 
     public function delete(CityEntity $cityEntity): void

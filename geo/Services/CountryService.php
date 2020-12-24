@@ -9,27 +9,25 @@ use App\Entities\Request\CountryRequestEntity;
 use App\Exceptions\ValidationException;
 use Geo\Factories\Entity\CountryEntityFactory;
 use App\Factories\Entity\Request\RequestEntityFactoryInterface;
+use Geo\Factories\ExternalGeoRepositoryFactory;
 use Geo\Repositories\CountryRepository;
+use Geo\Repositories\CountryRepositoryInterface;
 use Geo\Validators\CountryValidator;
 use Psr\Http\Message\ServerRequestInterface;
+use PsrFramework\Adapters\UuidGenerator\UuidGeneratorInterface;
 
 class CountryService
 {
-    private CountryRepository $countryRepository;
-    private CountryEntityFactory $countryEntityFactory;
-    private RequestEntityFactoryInterface $requestEntityFactory;
-    private CountryValidator $countryValidator;
+    public const COUNTRY_SEARCH_COUNT = 5;
 
     public function __construct(
-        CountryRepository $countryRepository,
-        CountryEntityFactory $countryEntityFactory,
-        RequestEntityFactoryInterface $requestEntityFactory,
-        CountryValidator $countryValidator
+        private CountryRepository $countryRepository,
+        private CountryEntityFactory $countryEntityFactory,
+        private RequestEntityFactoryInterface $requestEntityFactory,
+        private CountryValidator $countryValidator,
+        private ExternalGeoRepositoryFactory $externalGeoRepositoryFactory,
+        private UuidGeneratorInterface $uuidGenerator
     ) {
-        $this->countryRepository = $countryRepository;
-        $this->countryEntityFactory = $countryEntityFactory;
-        $this->requestEntityFactory = $requestEntityFactory;
-        $this->countryValidator = $countryValidator;
     }
 
     public function getAllCountries(): array
@@ -80,7 +78,19 @@ class CountryService
      */
     public function search(string $prefixName): array
     {
+        $countryEntities = $this->countryRepository->getCountries($prefixName, self::COUNTRY_SEARCH_COUNT);
 
+        if (empty($countryEntities)) {
+            $externalCountryGeoRepository = $this->externalGeoRepositoryFactory->createCountryRepository();
+            $countryEntities = $externalCountryGeoRepository
+                ->getCountries($prefixName, self::COUNTRY_SEARCH_COUNT);
+
+            foreach ($countryEntities as $countryEntity) {
+                $this->countryRepository->save($countryEntity);
+            }
+        }
+
+        return $countryEntities;
     }
 
     public function delete(CountryEntity $countryEntity): void

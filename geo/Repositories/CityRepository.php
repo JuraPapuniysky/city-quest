@@ -10,7 +10,7 @@ use App\Repositories\BaseRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
 
-class CityRepository extends BaseRepository
+class CityRepository extends BaseRepository implements CityRepositoryInterface
 {
     public function __construct(EntityManagerInterface $entityManager)
     {
@@ -38,5 +38,19 @@ class CityRepository extends BaseRepository
             'countryUuid' => $country->getUuid(),
             'isDeleted' => false,
         ]);
+    }
+
+    public function getCities(CountryEntity $countryEntity, string $prefix, int $count): array
+    {
+        $builder = $this->entityManager->getRepository(CityEntity::class)
+            ->createQueryBuilder('CityEntity');
+        $builder->setMaxResults($count);
+        $builder->where('CityEntity.name LIKE :prefix AND CityEntity.countryUuid=:countryUuid',)
+            ->setParameter('prefix', "$prefix%")
+            ->setParameter('countryUuid', $countryEntity->getUuid());
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
     }
 }
