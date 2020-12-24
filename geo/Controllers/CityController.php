@@ -76,6 +76,14 @@ final class CityController
         return $this->cityResponseFactory->city($city, 201);
     }
 
+    public function search(ServerRequestInterface $request, string $countryUuid, string $prefix): ResponseInterface
+    {
+        $countryEntity = $this->countryService->getOneCountryByUuid($countryUuid);
+        $cityEntities = $this->cityService->search($countryEntity, $prefix);
+
+        return $this->cityResponseFactory->cities($cityEntities);
+    }
+
     public function delete(ServerRequestInterface $request, string $uuid): ResponseInterface
     {
         try {

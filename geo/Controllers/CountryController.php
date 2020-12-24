@@ -68,6 +68,13 @@ final class CountryController
         return $this->countryResponseFactory->country($country);
     }
 
+    public function search(ServerRequestInterface $request, string $prefix): ResponseInterface
+    {
+        $countryEntities = $this->countryService->search($prefix);
+
+        return $this->countryResponseFactory->countries($countryEntities);
+    }
+
     public function delete(ServerRequestInterface $request, $uuid): ResponseInterface
     {
         try {

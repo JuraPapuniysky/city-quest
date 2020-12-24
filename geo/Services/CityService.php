@@ -8,12 +8,14 @@ use App\Entities\CityEntity;
 use App\Entities\CountryEntity;
 use App\Entities\Request\CityRequestEntity;
 use App\Exceptions\ValidationException;
+use Geo\Exceptions\ExternalServiceException;
 use Geo\Factories\Entity\CityEntityFactory;
 use App\Factories\Entity\Request\RequestEntityFactoryInterface;
 use Geo\Factories\ExternalGeoRepositoryFactory;
 use Geo\Repositories\CityRepository;
 use Geo\Validators\CityValidator;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Log\LoggerInterface;
 
 class CityService
 {
@@ -25,6 +27,7 @@ class CityService
         private CityEntityFactory $cityEntityFactory,
         private CityValidator $cityValidator,
         private ExternalGeoRepositoryFactory $externalGeoRepositoryFactory,
+        private LoggerInterface $logger
     ) {
     }
 
@@ -79,7 +82,14 @@ class CityService
 
         if (empty($cityEntities)) {
             $cityExternalRepository = $this->externalGeoRepositoryFactory->createCityRepository();
-            $cityEntities = $cityExternalRepository->getCities($countryEntity, $prefix, self::CITY_SEARCH_COUNT);
+
+            try {
+                $cityEntities = $cityExternalRepository->getCities($countryEntity, $prefix, self::CITY_SEARCH_COUNT);
+            } catch (ExternalServiceException $e) {
+                $this->logger->error($e->getMessage(), $e->getTrace());
+
+                return [];
+            }
 
             foreach ($cityEntities as $cityEntity) {
                 $this->cityRepository->save($cityEntity);

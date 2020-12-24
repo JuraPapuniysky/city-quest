@@ -7,6 +7,7 @@ namespace Geo\Services;
 use App\Entities\CountryEntity;
 use App\Entities\Request\CountryRequestEntity;
 use App\Exceptions\ValidationException;
+use Geo\Exceptions\ExternalServiceException;
 use Geo\Factories\Entity\CountryEntityFactory;
 use App\Factories\Entity\Request\RequestEntityFactoryInterface;
 use Geo\Factories\ExternalGeoRepositoryFactory;
@@ -14,6 +15,7 @@ use Geo\Repositories\CountryRepository;
 use Geo\Repositories\CountryRepositoryInterface;
 use Geo\Validators\CountryValidator;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Log\LoggerInterface;
 use PsrFramework\Adapters\UuidGenerator\UuidGeneratorInterface;
 
 class CountryService
@@ -26,7 +28,8 @@ class CountryService
         private RequestEntityFactoryInterface $requestEntityFactory,
         private CountryValidator $countryValidator,
         private ExternalGeoRepositoryFactory $externalGeoRepositoryFactory,
-        private UuidGeneratorInterface $uuidGenerator
+        private UuidGeneratorInterface $uuidGenerator,
+        private LoggerInterface $logger
     ) {
     }
 
@@ -82,8 +85,15 @@ class CountryService
 
         if (empty($countryEntities)) {
             $externalCountryGeoRepository = $this->externalGeoRepositoryFactory->createCountryRepository();
-            $countryEntities = $externalCountryGeoRepository
-                ->getCountries($prefixName, self::COUNTRY_SEARCH_COUNT);
+
+            try {
+                $countryEntities = $externalCountryGeoRepository
+                    ->getCountries($prefixName, self::COUNTRY_SEARCH_COUNT);
+            } catch (ExternalServiceException $e) {
+                $this->logger->error($e->getMessage(), $e->getTrace());
+
+                return [];
+            }
 
             foreach ($countryEntities as $countryEntity) {
                 $this->countryRepository->save($countryEntity);
