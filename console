@@ -14,5 +14,6 @@ $application = $container->get(Application::class);
 // ... register commands
 $application->add(new \App\Commands\TestCommand($container));
 $application->add(new \App\Commands\CreateUserCommand($container));
+$application->add(new \App\Commands\CalculatorCommand($container));
 
 $application->run();
