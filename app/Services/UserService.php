@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Entities\Request\AuthRequestEntity;
+use App\Entities\Request\RequestEntityInterface;
 use App\Entities\Request\UserRequestEntity;
 use App\Entities\SessionEntity;
 use App\Entities\UserEntity;
@@ -64,10 +65,8 @@ final class UserService extends CheckAuthService
         $this->jwt = $jwt;
     }
 
-    public function create(ServerRequestInterface $request): UserEntity
+    public function create(RequestEntityInterface $requestEntity): UserEntity
     {
-        $requestEntity = $this->requestEntityFactory->create($request, UserRequestEntity::class);
-
         if ($this->userCreateValidator->validate($requestEntity) === false) {
             throw new ValidationException('Validation error', 400);
         }
