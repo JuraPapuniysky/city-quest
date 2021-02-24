@@ -39,7 +39,10 @@ class QuestResponseFactory extends AbstractResponseFactory
 
     public function types(array $types): ResponseInterface
     {
-        return new JsonResponse($types);
+        return new JsonResponse([
+            'status' => 'success',
+            'questionTypes' => $types,
+        ]);
     }
 
     private function questToArray(QuestEntity $questEntity): array
