@@ -12,6 +12,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class QuestQuestionEntity
 {
+    const TYPES = [
+        [
+            'value' => 'text',
+            'description' => 'Text',
+        ],
+    ];
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")

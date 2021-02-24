@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Quest\Controllers;
 
+use App\Entities\QuestQuestionEntity;
 use App\Entities\UserEntity;
 use App\Exceptions\ValidationException;
 use Quest\Factories\Response\QuestResponseFactory;
@@ -76,5 +77,10 @@ final class QuestController
         } catch (EntityNotFoundException $e) {
             return $this->questResponseFactory->notFound($e);
         }
+    }
+
+    public function questionTypes(): ResponseInterface
+    {
+        return $this->questResponseFactory->types(QuestQuestionEntity::TYPES);
     }
 }

@@ -53,9 +53,8 @@ class RapidApiGeoRepository implements CountryRepositoryInterface, CityRepositor
     public function getCities(CountryEntity $countryEntity, string $prefix, int $count): array
     {
         $params = [];
-        if (!empty($countryCode)) {
-            $params['countryIds'] = $countryCode;
-        }
+
+        $params['types'] = 'CITY';
 
         $params['namePrefix'] = $prefix;
 
@@ -67,14 +66,15 @@ class RapidApiGeoRepository implements CountryRepositoryInterface, CityRepositor
         $cityEntities = [];
 
         foreach ($responseObject->data as $city) {
-            $cityRequestEntity = new CityRequestEntity();
-            $cityRequestEntity->countryUuid = $countryEntity->getUuid();
-            $cityRequestEntity->name = $city->name;
+            if ($city->countryCode === $countryEntity->getIsoCode()) {
+                $cityRequestEntity = new CityRequestEntity();
+                $cityRequestEntity->countryUuid = $countryEntity->getUuid();
+                $cityRequestEntity->name = $city->name;
 
-            $cityEntity = $this->cityEntityFactory->create($cityRequestEntity);
-            $cityEntities[] = $cityEntity;
+                $cityEntity = $this->cityEntityFactory->create($cityRequestEntity);
+                $cityEntities[] = $cityEntity;
+            }
         }
-
 
         return $cityEntities;
     }

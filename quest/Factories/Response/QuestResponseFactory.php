@@ -37,6 +37,11 @@ class QuestResponseFactory extends AbstractResponseFactory
         ], 200);
     }
 
+    public function types(array $types): ResponseInterface
+    {
+        return new JsonResponse($types);
+    }
+
     private function questToArray(QuestEntity $questEntity): array
     {
         return [
