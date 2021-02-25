@@ -32,14 +32,14 @@ class ErrorMiddleware implements MiddlewareInterface
 
             $code = $e->getCode();
 
-            if ($code instanceof Integer === false) {
+            if ((int)$code < 100) {
                 $code = 500;
             }
 
             return new JsonResponse([
                 'status' => 'error',
                 'message' => $e->getMessage()
-            ], $code);
+            ], (int)$code);
         }
     }
 }

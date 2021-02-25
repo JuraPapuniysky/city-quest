@@ -71,7 +71,7 @@ class QuestService
         ]);
     }
 
-    public function createRequestEntity(ServerRequestInterface $request): RequestEntityFactoryInterface
+    public function createRequestEntity(ServerRequestInterface $request): RequestEntityInterface
     {
         return $this->requestEntityFactory->create($request, QuestRequestEntity::class);
     }

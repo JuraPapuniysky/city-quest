@@ -11,18 +11,17 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Psr\Log\LoggerInterface;
 use PsrFramework\Adapters\JWT\JWTInterface;
 
 class JwtAuthMiddleware implements MiddlewareInterface
 {
-    private JWTInterface $jwtCreator;
-
-    private EntityManagerInterface $entityManager;
-
-    public function __construct(JWTInterface $jwtCreator, EntityManagerInterface $entityManager)
+    public function __construct(
+        private JWTInterface $jwtCreator,
+        private EntityManagerInterface $entityManager,
+        private LoggerInterface $logger
+    )
     {
-        $this->jwtCreator = $jwtCreator;
-        $this->entityManager = $entityManager;
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
@@ -41,6 +40,10 @@ class JwtAuthMiddleware implements MiddlewareInterface
 
             return $handler->handle($request->withAttribute(UserEntity::class, $userEntity));
         } catch (\Throwable $e) {
+            $this->logger->error($e->getMessage(), [
+                'trace' => $e->getTraceAsString()
+            ]);
+
             return $handler->handle($request->withAttribute(UserEntity::class, null)->withAttribute('authError', $e->getMessage()));
         }
     }

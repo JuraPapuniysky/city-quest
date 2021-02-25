@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PsrFramework\Http\Router;
 
+use App\Entities\UserEntity;
 use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
 use Invoker\InvokerInterface;
@@ -59,8 +60,16 @@ class Router implements MiddlewareInterface
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $dispatcher = simpleDispatcher(function (RouteCollector $router) {
+        $dispatcher = simpleDispatcher(function (RouteCollector $router) use ($request) {
             foreach ($this->routes as $route) {
+                /*if ($route['auth'] === true) {
+                    if ($request->getAttribute(UserEntity::class) !== null) {
+                        $router->addRoute($route['httpMethod'], $route['route'], $route['handler']);
+                    }
+
+                    continue;
+                }*/
+
                 $router->addRoute($route['httpMethod'], $route['route'], $route['handler']);
             }
         });
@@ -86,9 +95,10 @@ class Router implements MiddlewareInterface
 
                 return new JsonResponse($message, $code);
             case Dispatcher::FOUND:
-                if (array_key_exists(3, $routeInfo) && $routeInfo === true) {
+                if ($this->searchRoute($routeInfo)['auth']) {
                     $this->checkAuthService->checkIdentity($request);
                 }
+
                 $controllerHandler = $routeInfo[1];
                 $vars['request'] = $request;
                 foreach ($routeInfo[2] as $varName => $value) {
@@ -96,6 +106,16 @@ class Router implements MiddlewareInterface
                 }
 
                 return $this->invoker->call($controllerHandler, $vars);
+        }
+    }
+
+    private function searchRoute(array $routerInfo): array
+    {
+        foreach ($this->routes as $route) {
+            $handler = $routerInfo[1];
+            if ($route['handler'] === $handler) {
+                return $route;
+            }
         }
     }
 }

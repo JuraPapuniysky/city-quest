@@ -17,6 +17,6 @@ class CheckAuthService implements CheckAuthInterface
             return $user;
         }
 
-        throw new AuthException($request->getAttribute('Error'), 412);
+        throw new AuthException($request->getAttribute('authError'), 412);
     }
 }
