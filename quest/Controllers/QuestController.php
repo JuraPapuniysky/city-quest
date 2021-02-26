@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Quest\Controllers;
 
-use App\Entities\QuestQuestionEntity;
 use App\Entities\UserEntity;
 use App\Exceptions\ValidationException;
-use Laminas\Diactoros\Response\JsonResponse;
 use Quest\Factories\Response\QuestResponseFactory;
 use Geo\Services\CountryService;
 use Quest\Services\QuestQuestionService;
@@ -22,7 +20,7 @@ final class QuestController
         private QuestService $questService,
         private QuestResponseFactory $questResponseFactory,
         private CountryService $countryService,
-        private QuestQuestionService $questQuestionService
+        private QuestQuestionService $questQuestionService,
     ) {
     }
 

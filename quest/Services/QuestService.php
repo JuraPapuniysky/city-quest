@@ -47,7 +47,7 @@ class QuestService
     public function getUserQuests(ServerRequestInterface $request): array
     {
         return $this->questRepository->findAllByCriteria([
-            'userUuid' => $request->getAttribute(UserEntity::class),
+            'userUuid' => $request->getAttribute(UserEntity::class)->getUuid(),
         ]);
     }
 

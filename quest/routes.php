@@ -3,7 +3,7 @@
 
 //QuestController
 $app->get('quest', '/api/v1/quest/{uuid}', [\Quest\Controllers\QuestController::class, 'quest'], true);
-$app->get('quests', '/api/v1/quests/{countryUuid}', [\Quest\Controllers\QuestController::class, 'quests'], true);
+$app->get('quests', '/api/v1/quests', [\Quest\Controllers\QuestController::class, 'quests'], true);
 $app->post('questCreate', '/api/v1/quest', [\Quest\Controllers\QuestController::class, 'create'], true);
 $app->put('questUpdate', '/api/v1/quest/{uuid}', [\Quest\Controllers\QuestController::class, 'update'], true);
 $app->delete('questDelete', '/api/v1/quest/{uuid}', [\Quest\Controllers\QuestController::class, 'delete'], true);
