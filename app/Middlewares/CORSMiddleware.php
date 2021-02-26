@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Middlewares;
 
+use Laminas\Diactoros\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -17,8 +18,9 @@ class CORSMiddleware implements MiddlewareInterface
         header("Access-Control-Allow-Headers: Content-type, Authorization, Origin, Cache-Control, User-Agent, Refresh-Token");
         header('Access-Control-Allow-Methods: GET,POST,PUT,DELETE,HEAD,OPTIONS');
 
+
         if ($request->getMethod() == 'OPTIONS') {
-            exit(0);
+            return new Response('', 200);
         }
 
         return $handler->handle($request);

@@ -52,4 +52,10 @@ abstract class BaseRepository
             $this->entityManager->flush();
         }
     }
+
+    public function flash(): void
+    {
+        $this->entityManager->flush();
+    }
+
 }

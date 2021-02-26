@@ -7,6 +7,8 @@ namespace App\Middlewares;
 use App\Entities\UserEntity;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
+use Firebase\JWT\ExpiredException;
+use Laminas\Diactoros\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -39,11 +41,9 @@ class JwtAuthMiddleware implements MiddlewareInterface
             }
 
             return $handler->handle($request->withAttribute(UserEntity::class, $userEntity));
-        } catch (\Throwable $e) {
-            $this->logger->error($e->getMessage(), [
-                'trace' => $e->getTraceAsString()
-            ]);
-
+        } catch (EntityNotFoundException $e) {
+            return $handler->handle($request->withAttribute(UserEntity::class, null)->withAttribute('authError', $e->getMessage()));
+        } catch (ExpiredException $e) {
             return $handler->handle($request->withAttribute(UserEntity::class, null)->withAttribute('authError', $e->getMessage()));
         }
     }

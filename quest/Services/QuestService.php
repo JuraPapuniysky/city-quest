@@ -13,6 +13,7 @@ use App\Entities\UserEntity;
 use App\Exceptions\ValidationException;
 use Quest\Factories\Entity\QuestEntityFactory;
 use App\Factories\Entity\Request\RequestEntityFactoryInterface;
+use Quest\Factories\Entity\Request\QuestRequestEntityFactory;
 use Quest\Repositories\QuestRepository;
 use Quest\Validators\QuestValidator;
 use Psr\Http\Message\ServerRequestInterface;
@@ -21,7 +22,7 @@ class QuestService
 {
     public function __construct(
         private QuestRepository $questRepository,
-        private RequestEntityFactoryInterface $requestEntityFactory,
+        private QuestRequestEntityFactory $requestEntityFactory,
         private QuestValidator $questValidator,
         private QuestEntityFactory $questEntityFactory
     ) {
@@ -84,7 +85,7 @@ class QuestService
 
         $questEntity = $this->questEntityFactory->create($requestEntity, $userEntity);
 
-        $this->questRepository->save($questEntity);
+        $this->questRepository->save($questEntity, false);
 
         return $questEntity;
     }
@@ -107,5 +108,10 @@ class QuestService
     {
         $questEntity->setIsDeleted(true);
         $this->questRepository->save($questEntity);
+    }
+
+    public function commit(): void
+    {
+        $this->questRepository->flash();
     }
 }

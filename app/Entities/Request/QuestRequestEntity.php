@@ -6,8 +6,11 @@ namespace App\Entities\Request;
 
 class QuestRequestEntity implements RequestEntityInterface
 {
-    public $countryUuid;
-    public $cityUuid;
-    public $name;
-    public $description;
+    public ?string $countryUuid;
+    public ?string $cityUuid;
+    public ?string $name;
+    public ?string $description;
+
+    /** @var QuestQuestionRequestEntity[] $questionEntities */
+    public array $questionEntities = [];
 }

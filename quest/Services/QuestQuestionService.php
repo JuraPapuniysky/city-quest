@@ -7,6 +7,7 @@ namespace Quest\Services;
 use App\Entities\QuestEntity;
 use App\Entities\QuestQuestionEntity;
 use App\Entities\Request\QuestQuestionRequestEntity;
+use App\Entities\Request\RequestEntityInterface;
 use App\Exceptions\ValidationException;
 use Quest\Factories\Entity\QuestQuestionFactory;
 use App\Factories\Entity\Request\RequestEntityFactoryInterface;
@@ -49,16 +50,14 @@ class QuestQuestionService
         ]);
     }
 
-    public function create(ServerRequestInterface $request, QuestEntity $questEntity): QuestQuestionEntity
+    public function create(RequestEntityInterface $requestEntity, QuestEntity $questEntity): QuestQuestionEntity
     {
-        $requestEntity = $this->requestEntityFactory->create($request, QuestQuestionRequestEntity::class);
-
         if ($this->questQuestionValidator->validate($requestEntity) === false) {
             throw new ValidationException($this->questQuestionValidator->errorsToString());
         }
 
-        $entity = $this->questQuestionFactory->create($requestEntity);
-        $this->questQuestionRepository->save($entity);
+        $entity = $this->questQuestionFactory->create($requestEntity, $questEntity);
+        $this->questQuestionRepository->save($entity, false);
 
         return $entity;
     }

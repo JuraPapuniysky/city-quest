@@ -1,11 +1,11 @@
 <?php
 
-declare(strict_types=1);
+//declare(strict_types=1);
 
 namespace App\Middlewares;
 
+use App\Exceptions\AuthException;
 use Laminas\Diactoros\Response\JsonResponse;
-use phpDocumentor\Reflection\Types\Integer;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -25,21 +25,19 @@ class ErrorMiddleware implements MiddlewareInterface
     {
         try {
             return $handler->handle($request);
+        }   catch (AuthException $e) {
+            return new JsonResponse([
+                'error' => $e->getMessage(),
+            ], 412);
         } catch (\Throwable $e) {
             $this->logger->error($e->getMessage(), [
-                'trace' => $e->getTrace()
+                'trace' => $e->getTraceAsString()
             ]);
-
-            $code = $e->getCode();
-
-            if ((int)$code < 100) {
-                $code = 500;
-            }
 
             return new JsonResponse([
                 'status' => 'error',
-                'message' => $e->getMessage()
-            ], (int)$code);
+                'message' => $e->getMessage(),
+            ], 500);
         }
     }
 }

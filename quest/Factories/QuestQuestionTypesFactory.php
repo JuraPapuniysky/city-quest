@@ -7,11 +7,19 @@ namespace Quest\Factories;
 class QuestQuestionTypesFactory
 {
     const TYPE_STRING = 'string';
+    const TYPE_TEXT = 'text';
 
     public function questionTypes(): array
     {
         return [
-            self::TYPE_STRING => 'String',
+            [
+                'value' => self::TYPE_STRING,
+                'description' => 'String',
+            ],
+            [
+                'value' => self::TYPE_TEXT,
+                'description' => 'Text',
+            ],
         ];
     }
 }

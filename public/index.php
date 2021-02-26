@@ -1,7 +1,7 @@
 <?php
 
 use PsrFramework\Http\Application;
-use Narrowspark\HttpEmitter\SapiEmitter;
+use HttpSoft\Emitter\SapiEmitter;
 use Dotenv\Dotenv;
 
 require __DIR__ . '/../vendor/autoload.php';

@@ -7,8 +7,10 @@ namespace Quest\Controllers;
 use App\Entities\QuestQuestionEntity;
 use App\Entities\UserEntity;
 use App\Exceptions\ValidationException;
+use Laminas\Diactoros\Response\JsonResponse;
 use Quest\Factories\Response\QuestResponseFactory;
 use Geo\Services\CountryService;
+use Quest\Services\QuestQuestionService;
 use Quest\Services\QuestService;
 use Doctrine\ORM\EntityNotFoundException;
 use Psr\Http\Message\ResponseInterface;
@@ -19,7 +21,8 @@ final class QuestController
     public function __construct(
         private QuestService $questService,
         private QuestResponseFactory $questResponseFactory,
-        private CountryService $countryService
+        private CountryService $countryService,
+        private QuestQuestionService $questQuestionService
     ) {
     }
 
@@ -43,7 +46,14 @@ final class QuestController
     {
         try {
             $requestEntity = $this->questService->createRequestEntity($request);
+
             $questEntity = $this->questService->create($requestEntity, $request->getAttribute(UserEntity::class));
+
+            foreach ($requestEntity->questionEntities as $questionEntity) {
+
+                $questionEntity = $this->questQuestionService->create($questionEntity, $questEntity);
+            }
+            $this->questService->commit();
 
             return $this->questResponseFactory->quest($questEntity, 201);
         } catch (ValidationException $e) {
@@ -81,6 +91,6 @@ final class QuestController
 
     public function questionTypes(): ResponseInterface
     {
-        return $this->questResponseFactory->types(QuestQuestionEntity::TYPES);
+        return $this->questResponseFactory->types($this->questQuestionService->getQuestionTypes());
     }
 }

@@ -29,22 +29,22 @@ class QuestQuestionValidator extends AbstractValidator implements ValidatorInter
 
     public function validate(RequestEntityInterface $requestEntity): bool
     {
-        $this->validator->addValidator('entityExists', $this->entityExistsRule);
+        $types = [];
 
-        $existsClassname = QuestEntity::class;
+        foreach ($this->questQuestionTypesFactory->questionTypes() as $questionType) {
+            $types[$questionType['value']] = $questionType['description'];
+        }
 
         $this->validation = $this->validator->make([
-            'questUuid' => $requestEntity->questUuid,
             'answer' => $requestEntity->answer,
             'description' => $requestEntity->description,
             'type' => $requestEntity->type,
         ], [
-            'questUuid' => "required|entityExists:$existsClassname,uuid",
             'description' => 'required',
             'answer' => 'required',
             'type' => [
                 'required',
-                $this->validator('in', array_keys($this->questQuestionTypesFactory->questionTypes()))->strict(),
+                'in:' . implode(',', array_keys($types)),
             ],
         ]);
 
